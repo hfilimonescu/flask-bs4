@@ -14,7 +14,7 @@
 
           {%- block styles %}
             <!-- Bootstrap CSS -->
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+            <link rel="stylesheet" href="{{ url_for('bootstrap.static', filename='css/bootstrap.min.css') }}">
           {%- endblock styles %}
         {%- endblock head %}
       </head>
@@ -28,9 +28,9 @@
           {% block scripts -%}
             <!-- Optional JavaScript -->
             <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-            <script src="{{ url_for('static', filename='jquery.slim.min.js') }}"></script>
-            <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
-            <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+            <script src="{{ url_for('bootstrap.static', filename='jquery.slim.min.js') }}"></script>
+            <script src="{{ url_for('bootstrap.static', filename='popper.min.js') }}"></script>
+            <script src="{{ url_for('bootstrap.static', filename='js/bootstrap.min.js') }}"></script>
           {%- endblock scripts %}
         {%- endblock body %}
       </body>
