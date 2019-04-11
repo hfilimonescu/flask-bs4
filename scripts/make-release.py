@@ -95,9 +95,8 @@ def build():
     Popen(cmd).wait()
 
 
-def build_and_upload():
-    Popen([sys.executable, 'setup.py', 'release', 'sdist',
-           'bdist_wheel', 'upload']).wait()
+def upload():
+    Popen([sys.executable, '-m', 'twine', 'upload', 'dist/*']).wait()
 
 
 def fail(message, *args):
@@ -167,8 +166,8 @@ def main():
     set_setup_version(version)
     make_git_commit('* Bump version number to %s', version)
     make_git_tag(version)
-    # build()
-    build_and_upload()
+    build()
+    upload()
     set_init_version(dev_version)
     set_setup_version(dev_version)
 
