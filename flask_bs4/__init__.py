@@ -20,7 +20,7 @@ else:
 from .forms import render_form
 from .utils import flash_messages
 
-__version__ = '4.3.1'
+__version__ = '4.3.1.1.dev'
 BOOTSTRAP_VERSION = re.sub(r'^(\d+\.\d+\.\d+).*', r'\1', __version__)
 JQUERY_VERSION = '3.3.1'
 POPPER_VERSION = '1.15.0'
