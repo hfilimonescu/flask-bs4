@@ -82,12 +82,12 @@ def set_filename_version(filename, version_number, pattern):
 
 def set_init_version(version):
     info('Setting __init__.py version to %s', version)
-    set_filename_version('flask_bs4/__init__.py', version, 'version')
+    set_filename_version('flask_bs4/__init__.py', version, '__version__')
 
 
 def set_setup_version(version):
     info('Setting setup.py version to %s', version)
-    set_filename_version('setup.py', version, '__version__')
+    set_filename_version('setup.py', version, 'version')
 
 
 def build():
