@@ -2,8 +2,17 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.4.1
--------------
+Version 4.4.1.2
+---------------
+
+Released on January 7th 2020
+
+-   Fix: Add dependency to `Flask-WTF>=0.14.0` in `setup.py`
+-   Fix: Rendering of `BooleanField` allgnment
+
+
+Version 4.4.1.1
+---------------
 
 Released on January 6th 2020
 
