@@ -15,7 +15,7 @@
   {% endif %}
 
   {% if form_type == 'horizontal' %}
-    {% set off1 = ' offset-' ~ horizontal_columns[0] ~ '-' ~ horizontal_columns[1] %}
+    {% set offset = ' offset-' ~ horizontal_columns[0] ~ '-' ~ horizontal_columns[1] %}
     {% set col1 = ' col-' ~ horizontal_columns[0] ~ '-' ~ horizontal_columns[1] %}
     {% set col2 = ' col-' ~ horizontal_columns[0] ~ '-' ~ horizontal_columns[2] %}
   {% endif %}
@@ -24,11 +24,17 @@
     <div class="form-group {{ 'row' if form_type == 'horizontal' }}">
       {% if form_type == 'horizontal' %}
         <div class="{{ col1 }}"></div>
+        <div class="{{ col2 }}">
       {% endif %}
-      <div class="form-check {{ col2 if form_type == 'horizontal' }}">
+
+      <div class="form-check">
         {{ field(class_='form-check-input ' ~ field_classes) }}
         {{ field.label(class_='form-check-label') }}
       </div>
+
+      {% if form_type == 'horizontal' %}
+        </div>
+      {% endif %}
 
     {% elif field.type == 'RadioField' %}
       <div class="form-group">
@@ -61,9 +67,9 @@
     {% elif field.type == 'FileField' %}
     <div class="form-group {{ 'row' if form_type == 'horizontal'}}">
       <div class="custom-file
-                  {{ off1 if form_type == 'horizontal' }}
+                  {{ offset if form_type == 'horizontal' }}
                   {{ col2 if form_type == 'horizontal' }}">
-        {{ field(class_='custom-file-input ' ~ field_classes) }}
+        {{ field(class_='custom-file-input' ~ field_classes) }}
         {{ field.label(class_='custom-file-label') }}
       </div>
 
@@ -82,7 +88,7 @@
     {% if field.description %}
       <small id="{{ field.name -}}Help"
              class="form-text text-muted
-                    {{ off1 if form_type == 'horizontal' }}
+                    {{ offset if form_type == 'horizontal' }}
                     {{ col2 if form_type == 'horizontal' }}">
         {{ field.description }}
       </small>
@@ -91,7 +97,7 @@
     {% if field.errors %}
       {% for error in field.errors %}
         <div class="invalid-feedback
-                    {{ off1 if form_type == 'horizontal' }}
+                    {{ offset if form_type == 'horizontal' }}
                     {{ col2 if form_type == 'horizontal' }}">
           {{ error }}
         </div>
