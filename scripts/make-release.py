@@ -90,6 +90,21 @@ def set_setup_version(version):
     set_filename_version('setup.py', version, 'version')
 
 
+def set_changelog_version(version):
+    def parse_changelog():
+    with open('CHANGES') as f:
+        contents = f.readlines()
+
+        contents.insert(4, 'Version {0}'.format(version))
+        contents.insert(5, '---------------')
+        contents.insert(6, '')
+        contents.insert(7, 'Unreleased')
+        contents.insert(8, '')
+
+    with open(filename, 'w') as f:
+        f.write(contents)
+
+
 def build():
     cmd = [sys.executable, 'setup.py', 'sdist', 'bdist_wheel']
     Popen(cmd).wait()
@@ -170,6 +185,7 @@ def main():
     upload()
     set_init_version(dev_version)
     set_setup_version(dev_version)
+    set_changelog_version(dev_version)
 
 
 if __name__ == '__main__':
