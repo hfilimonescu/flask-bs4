@@ -171,8 +171,8 @@ def main():
             release_date.date(), date.today()
         )
 
-    # if not git_is_clean():
-    #     fail('You have uncommitted changes in git')
+    if not git_is_clean():
+        fail('You have uncommitted changes in git')
 
     try:
         import wheel  # noqa: F401
@@ -188,6 +188,7 @@ def main():
     set_init_version(dev_version)
     set_setup_version(dev_version)
     set_changelog_version(dev_version)
+    make_git_commit('Start development for %s', dev_version)
 
 
 if __name__ == '__main__':
