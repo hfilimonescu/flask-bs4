@@ -99,6 +99,9 @@ def set_changelog_version(version):
         contents.insert(6, '\n')
         contents.insert(7, 'Unreleased\n')
         contents.insert(8, '\n')
+        contents.insert(9, '-   \n')
+        contents.insert(10, '\n')
+        contents.insert(11, '\n')
 
     with open('CHANGES', 'w') as f:
         f.writelines(contents)
