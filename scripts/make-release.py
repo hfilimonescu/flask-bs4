@@ -94,11 +94,11 @@ def set_changelog_version(version):
     with open('CHANGES') as f:
         contents = f.readlines()
 
-        contents.insert(4, 'Version {0}'.format(version))
-        contents.insert(5, '---------------')
-        contents.insert(6, '')
-        contents.insert(7, 'Unreleased')
-        contents.insert(8, '')
+        contents.insert(4, 'Version {0}\n'.format(version))
+        contents.insert(5, '---------------\n')
+        contents.insert(6, '\n')
+        contents.insert(7, 'Unreleased\n')
+        contents.insert(8, '\n')
 
     with open('CHANGES', 'w') as f:
         f.writelines(contents)
