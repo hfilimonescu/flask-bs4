@@ -2,6 +2,16 @@ Flask-BS4 Changelog
 ===================
 
 
+Version 4.4.1.4
+---------------
+
+Released on January 10th 2020
+
+-   Fix: Use bootstrap/static for html5shiv & respond
+-   Cleanup template formatting of Jinja fields
+-   Update make-release to add new version to CHANGES
+
+
 Version 4.4.1.3
 ---------------
 
