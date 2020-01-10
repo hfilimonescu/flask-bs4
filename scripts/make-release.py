@@ -91,7 +91,6 @@ def set_setup_version(version):
 
 
 def set_changelog_version(version):
-    def parse_changelog():
     with open('CHANGES') as f:
         contents = f.readlines()
 
