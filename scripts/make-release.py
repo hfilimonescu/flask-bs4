@@ -101,7 +101,7 @@ def set_changelog_version(version):
         contents.insert(8, '')
 
     with open('CHANGES', 'w') as f:
-        f.write(contents)
+        f.writelines(contents)
 
 
 def build():
