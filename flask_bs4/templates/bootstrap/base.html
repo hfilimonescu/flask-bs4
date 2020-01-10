@@ -4,7 +4,7 @@
 {%- block html %}
   <head>
     {%- block head %}
-    <title>{% block title %}{{title|default}}{% endblock title %}</title>
+    <title>{% block title %}{{ title | default }}{% endblock title %}</title>
 
     {%- block metas %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
 
     {%- block styles %}
     <!-- Bootstrap -->
-    <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
+    <link href="{{ bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap') }}" rel="stylesheet">
     {%- endblock styles %}
     {%- endblock head %}
   </head>
@@ -24,11 +24,11 @@
     {%- endblock content %}
 
     {% block scripts %}
-    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
-    <script src="{{bootstrap_find_resource('popper.js', cdn='popper.js')}}"></script>
-    <script src="{{bootstrap_find_resource('respond.js', cdn='respond.js')}}"></script>
-    <script src="{{bootstrap_find_resource('html5shiv.js', cdn='html5shiv')}}"></script>
-    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+    <script src="{{ bootstrap_find_resource('jquery.js', cdn='jquery') }}"></script>
+    <script src="{{ bootstrap_find_resource('popper.js', cdn='popper.js') }}"></script>
+    <script src="{{ bootstrap_find_resource('respond.js', cdn='respond.js') }}"></script>
+    <script src="{{ bootstrap_find_resource('html5shiv.js', cdn='html5shiv') }}"></script>
+    <script src="{{ bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap') }}"></script>
     {%- endblock scripts %}
     {%- endblock body %}
   </body>
