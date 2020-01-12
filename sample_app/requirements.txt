@@ -1,0 +1,4 @@
+dominate==2.4.0
+Flask-WTF==0.14.2
+visitor==0.1.3
+WTForms==2.2.1
