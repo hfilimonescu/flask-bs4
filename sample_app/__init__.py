@@ -31,13 +31,13 @@ class TestForm(FlaskForm):
                                         'lacus, eu ornare ex imperdiet quis. Sed non '
                                         'aliquet magna. Praesent gravida odio id massa '
                                         'condimentum, quis imperdiet nunc luctus.')
-    ranger = IntegerRangeField('Ranger', render_kw={'step': 1})
+    ranger = IntegerRangeField('The Lone Ranger', render_kw={'step': 1})
     a_float = FloatField(u'A floating point number')
     a_decimal = DecimalField(places=2, rounding='ROUND_HALF_UP',
                              validators=[])
     a_integer = IntegerField(u'An integer')
     sample_file = FileField(u'Your favorite file', description='A file you would like to upload.')
-    radio = RadioField('Radio', choices=[('ch_01', 'Choice 01'),
+    radio = RadioField('Radio Gaga', choices=[('ch_01', 'Choice 01'),
                                          ('ch_02', 'Choice 02'),
                                          ('ch_03', 'Choice 03')],
                        default='ch_02',

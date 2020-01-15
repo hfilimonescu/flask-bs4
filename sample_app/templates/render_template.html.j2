@@ -11,7 +11,12 @@
       <h1>Python Function - render_template</h1>
       {{ form | render_form(form_type='horizontal',
                             horizontal_columns=('lg', 2, 10),
-                            button_map={'submit': 'primary btn-block'}) }}
+                            button_map={'submit': 'dark btn-block'}) }}
+
+      {# {{ form | render_form(form_type='horizontal',
+                            horizontal_columns=('lg', 2, 10)) }} #}
+
+      {# {{ form | render_form(button_map={'submit': 'success btn-block'}) }} #}
 
     </div>
   </div>
