@@ -29,6 +29,12 @@
     <script src="{{ bootstrap_find_resource('respond.js', cdn='respond.js') }}"></script>
     <script src="{{ bootstrap_find_resource('html5shiv.js', cdn='html5shiv') }}"></script>
     <script src="{{ bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap') }}"></script>
+
+    <script>
+      $('.modal').on('shown.bs.modal', function() {
+        $(this).find('[autofocus]').focus();
+      });
+    </script>
     {%- endblock scripts %}
     {%- endblock body %}
   </body>
