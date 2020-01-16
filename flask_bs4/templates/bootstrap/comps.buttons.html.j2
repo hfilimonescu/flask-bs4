@@ -1,0 +1,69 @@
+{% macro _build_btn(design='',
+                    size=None,
+                    text=None,
+                    url=None,
+                    icon=None,
+                    tag=None,
+                    target=None,
+                    extra_classes=[]) %}
+
+    {% if tag == None %}
+        {% set tag = 'a' %}
+    {% endif %}
+
+    {% if target != None %}
+        {# We don't want a href when opening a modal #}
+        {% set url = '#' %}
+
+        {# Add hashtag to target if user forgot to pass it through #}
+        {% if not target.startswith('#') %}
+            {% set target = '#' ~ target %}
+        {% endif %}
+    {% endif %}
+
+
+    <{{ tag }}
+            {{ ({'href': url}) | xmlattr if url else 'disabled' }}
+            class="{{ 'btn btn-' if design != '' }}{{- 'outline-' if config['SISO_UI_OUTLINE'] -}}{{- (design or 'light').lower() }} {{ extra_classes | join(' ') }}"
+            {% if tag == 'a' %}
+                role="button"
+            {% endif %}
+            {% if target != None %}
+                data-toggle="modal"
+                data-target="{{ target }}"
+            {% endif %}
+            rel="tooltip">
+
+        {{- text or '' -}}
+    </{{ tag }}>
+{% endmacro %}
+
+{% macro link(text, url, icon, extra_classes) %}
+    {{ _build_btn(text=text, url=url, icon=icon, tag='a', extra_classes=extra_classes) }}
+{% endmacro %}
+
+{% macro link_m(text, icon, target, extra_classes) %}
+    {# Create a link to open a modal #}
+    {{ _build_btn(text=text, icon=icon, target=target, tag='a', extra_classes=extra_classes) }}
+{% endmacro %}
+
+{% macro btn(text, url, icon, size, design, tag, extra_classes) %}
+    {{ _build_btn(text=text, url=url, icon=icon, design=design, size=size,
+                  tag=tag, extra_classes=extra_classes) }}
+{% endmacro %}
+
+{% macro btn_a(text, url, icon, size, design, extra_classes) %}
+    {{ _build_btn(text=text, url=url, icon=icon, design=design, size=size,
+                  tag='a', extra_classes=extra_classes) }}
+{% endmacro %}
+
+{% macro btn_b(text, url, icon, size, design, extra_classes) %}
+    {{ _build_btn(text=text, url=url, icon=icon, design=design, size=size,
+                  tag='button', extra_classes=extra_classes) }}
+{% endmacro %}
+
+{% macro btn_m(text, target, icon, size, design, extra_classes) %}
+    {# Create a button to open a modal #}
+    {{ _build_btn(text=text, url=url, icon=icon, design=design, size=size,
+                  tag='button', target=target, extra_classes=extra_classes) }}
+{% endmacro %}
