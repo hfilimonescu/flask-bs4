@@ -9,6 +9,7 @@ Unreleased
 
 -   Fix: `forms.render_form` creates correct BS4 fields
 -   Add: Components.Buttons in different variations
+-   Fix: `enctype` has no index if no `FileField` in form
 
 
 Version 4.4.1.4

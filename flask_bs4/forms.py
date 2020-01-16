@@ -8,7 +8,9 @@ def _wrap_form(form,
                method='post',
                enctype=None,
                **kwargs):
-    form_content = f'<form action="{action}" method="{method}" id="{id}" class="form" role="form" enctype="{enctype[0]}">\n'
+
+
+    form_content = f'<form action="{action}" method="{method}" id="{id}" class="form" role="form" enctype="{enctype[0] if enctype else ""}">\n'
     form_content += f'{form}\n</form>'
 
     return form_content
