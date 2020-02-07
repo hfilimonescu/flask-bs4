@@ -2,15 +2,20 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.4.1.5.dev
+Version 4.4.1.5
 ---------------
 
-Unreleased
+Released on February 7th 2020
 
--   Fix: `forms.render_form` creates correct BS4 fields
--   Add: Components.Buttons in different variations
--   Fix: `enctype` has no index if no `FileField` in form
+-   Add: Makefile
+-   Add Validation to `render_form` (#1)
 -   Add: Components.Modal with focus and button
+-   Fix: `enctype` has no index if no `FileField`
+-   Add: Components.Buttons in different variations
+-   Modify sample app for `forms.render_form`
+-   Fix: `forms.render_form` creates correct fields
+-   Update .gitignore to ignore .vscode
+-   Feature: Add Sample App to view the Input Fields
 
 
 Version 4.4.1.4
