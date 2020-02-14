@@ -24,7 +24,7 @@
 
     <{{ tag }}
             {{ ({'href': url}) | xmlattr if url else 'disabled' }}
-            class="{{ 'btn btn-' if design != '' }}{{- 'outline-' if config['SISO_UI_OUTLINE'] -}}{{- (design or 'light').lower() }} {{ extra_classes | join(' ') }}"
+            class="{{ 'btn btn-' if design != '' }}{{- 'outline-' if config['SISO_UI_OUTLINE'] -}}{{- (design or 'light').lower() }} {{ ('btn-' ~ size) if size }} {{ extra_classes | join(' ') }}"
             {% if tag == 'a' %}
                 role="button"
             {% endif %}
