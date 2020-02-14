@@ -1,0 +1,169 @@
+{% macro form_errors(form, hiddens=True) %}
+  {%- if form.errors %}
+    {%- for fieldname, errors in form.errors.items() %}
+      {%- if bootstrap_is_hidden_field(form[fieldname]) and hiddens or
+             not bootstrap_is_hidden_field(form[fieldname]) and hiddens != 'only' %}
+        {%- for error in errors %}
+          <p class="error">{{error}}</p>
+        {%- endfor %}
+      {%- endif %}
+    {%- endfor %}
+  {%- endif %}
+{%- endmacro %}
+
+{% macro form_field(field,
+                    form_type="basic",
+                    horizontal_columns=('lg', 2, 10),
+                    button_map={},
+                    form_errors=False) %}
+
+  {% if form_errors %}
+    {% if field.errors %}
+      {% set field_classes = 'is-invalid' %}
+    {% else %}
+      {% set firld_classes = 'is-valid' %}
+    {% endif %}
+  {% else %}
+    {% set field_classes = '' %}
+  {% endif %}
+
+  {% if form_type == 'horizontal' %}
+    {% set offset = ' offset-' ~ horizontal_columns[0] ~ '-' ~ horizontal_columns[1] %}
+    {% set col1 = ' col-' ~ horizontal_columns[0] ~ '-' ~ horizontal_columns[1] %}
+    {% set col2 = ' col-' ~ horizontal_columns[0] ~ '-' ~ horizontal_columns[2] %}
+  {% endif %}
+
+  {% if field.type == 'BooleanField' %}
+    <div class="form-group {{ 'row' if form_type == 'horizontal' }}">
+      {% if form_type == 'horizontal' %}
+        <div class="{{ col1 }}"></div>
+        <div class="{{ col2 }}">
+      {% endif %}
+
+      <div class="form-check">
+        {{ field(class_='form-check-input ' ~ field_classes) }}
+        {{ field.label(class_='form-check-label') }}
+      </div>
+
+      {% if form_type == 'horizontal' %}
+        </div>
+      {% endif %}
+
+    {% elif field.type == 'RadioField' %}
+      <div class="form-group">
+
+        {% if form_type == 'horizontal' %}
+          <div class="row">
+            <legend class="col-form-label {{ col1 }} pt-0">{{ field.label }}</legend>
+              <div class="{{ col2 }}">
+        {% endif %}
+
+        {% for key, value in field.choices %}
+          <div class="form-check {{ col2 if form_type == 'horizontal' }}">
+            <input class="form-check-input {{ field_classes }}"
+                   type="radio"
+                   name="{{ field.name }}"
+                   id="{{ key }}"
+                   value="{{ key }}"
+                   {{ 'checked' if key == field.default }}>
+            <label class="form-check-label" for="{{ key }}">
+              {{ value }}
+            </label>
+          </div>
+        {% endfor %}
+
+        {% if form_type == 'horizontal' %}
+            </div>
+          </div>
+        {% endif %}
+
+    {% elif field.type == 'FileField' %}
+    <div class="form-group {{ 'row' if form_type == 'horizontal'}}">
+      <div class="custom-file
+                  {{ offset if form_type == 'horizontal' }}
+                  {{ col2 if form_type == 'horizontal' }}">
+        {{ field(class_='custom-file-input' ~ field_classes) }}
+        {{ field.label(class_='custom-file-label') }}
+      </div>
+
+    {% elif field.type == 'SubmitField' %}
+      {{ field(class='btn btn-%s' % button_map.get(field.name, 'dark')) }}
+
+    {% elif field.type == 'CSRFTokenField' %}
+      {{ field }}
+
+    {% else %}
+      <div class="form-group {{ 'row' if form_type == 'horizontal'}}">
+        {{ field.label(class_=col1) }}
+        {{ field(class_='form-control ' ~ field_classes ~ col2) }}
+    {% endif %}
+
+    {% if field.description %}
+      <small id="{{ field.name -}}Help"
+             class="form-text text-muted
+                    {{ offset if form_type == 'horizontal' }}
+                    {{ col2 if form_type == 'horizontal' }}">
+        {{ field.description }}
+      </small>
+    {% endif %}
+
+    {% if field.errors %}
+      {% for error in field.errors %}
+        <div class="invalid-feedback
+                    {{ offset if form_type == 'horizontal' }}
+                    {{ col2 if form_type == 'horizontal' }}">
+          {{ error }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+  </div>
+
+{% endmacro %}
+
+{% macro quick_form(form,
+                    action="",
+                    method="post",
+                    extra_classes=None,
+                    role="form",
+                    form_type="basic",
+                    horizontal_columns=('lg', 2, 10),
+                    enctype=None,
+                    button_map={},
+                    id="",
+                    novalidate=False,
+                    render_kw={}) %}
+
+  {%- set _enctype = [] %}
+  {%- if enctype is none -%}
+    {%- for field in form %}
+      {%- if field.type == 'FileField' %}
+        {%- set _ = _enctype.append('multipart/form-data') -%}
+      {%- endif %}
+    {%- endfor %}
+  {%- else %}
+    {% set _ = _enctype.append(enctype) %}
+  {%- endif %}
+
+  <form class="form {{ extra_classes if extra_classes }}
+              {{ 'form-horizontal' if form_type == 'horizontal' -}}
+              {{ 'form-inline' if form_type == 'inline' -}}"
+        action="{{ action }}"
+        {{ 'id=' ~ id if id }}
+        method="{{ method }}"
+        {%- if _enctype[0] %} enctype="{{ _enctype[0] }}" {% endif -%}
+        {%- if role %} role="{{ role }}" {% endif -%}
+        {%- if novalidate %} novalidate {% endif -%}
+        {%- if render_kw %} {{ render_kw | xmlattr }} {% endif -%}>
+
+  {% for field in form %}
+    {{ form_field(field,
+                  form_type=form_type,
+                  horizontal_columns=horizontal_columns,
+                  button_map=button_map,
+                  form_errors=form.errors) }}
+
+  {% endfor %}
+  </form>
+
+{%- endmacro %}
