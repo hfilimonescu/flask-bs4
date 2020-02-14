@@ -52,7 +52,8 @@
                   tag=tag, extra_classes=extra_classes) }}
 {% endmacro %}
 
-{% macro btn_a(text, url, icon, size, design, extra_classes) %}
+{% macro btn_a(text, url, icon, size, design, extra_classes, type) %}
+    {% set design = design or type %}
     {{ _build_btn(text=text, url=url, icon=icon, design=design, size=size,
                   tag='a', extra_classes=extra_classes) }}
 {% endmacro %}
@@ -62,8 +63,9 @@
                   tag='button', extra_classes=extra_classes) }}
 {% endmacro %}
 
-{% macro btn_m(text, target, icon, size, design, extra_classes) %}
+{% macro btn_m(text, target, icon, size, design, extra_classes, type) %}
     {# Create a button to open a modal #}
+    {% set design = design or type %}
     {{ _build_btn(text=text, url=url, icon=icon, design=design, size=size,
                   tag='button', target=target, extra_classes=extra_classes) }}
 {% endmacro %}
