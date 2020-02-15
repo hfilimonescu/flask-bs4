@@ -2,6 +2,8 @@ from markupsafe import Markup
 
 from wtforms.widgets.core import html_params
 
+from .internals import xmlattr
+
 def _add_description(field, **kwargs):
     if not field.description:
         return ''
@@ -28,11 +30,7 @@ def _wrap_form(form,
                render_kw={}):
     _classes = " ".join(extra_classes)
 
-    _render_kw = " ".join(
-        f'{key}="{value}"'
-        for key, value in render_kw.items()
-        if value is not None
-    )
+    _render_kw = xmlattr(render_kw)
 
     form_content = f'<form action="{action}" method="{method}" id="{id}" class="form {_classes}" role="{role}"'
     form_content += f'enctype="{enctype[0] if enctype else ""}" {"novalidate" if novalidate else ""} {_render_kw}>\n'
