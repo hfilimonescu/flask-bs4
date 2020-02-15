@@ -184,7 +184,7 @@ def _wrap_csrf(field):
 
 def render_form(form, **kwargs):
     form_fields = ''
-    _enctype = []
+    _enctype = kwargs.get('enctype', [])
 
     for field in form:
         if field.type == 'BooleanField':
