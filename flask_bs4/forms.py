@@ -16,15 +16,26 @@ def _add_error_message(field_errors):
 
 def _wrap_form(form,
                action='',
+               button_map=None,
+               enctype=None,
+               extra_classes=[],
+               form_type=None,
+               horizontal_columns=None,
                id=None,
                method='post',
-               enctype=None,
                novalidate=False,
-               **kwargs):
+               role='form',
+               render_kw={}):
+    _classes = " ".join(extra_classes)
 
+    _render_kw = " ".join(
+        f'{key}="{value}"'
+        for key, value in render_kw.items()
+        if value is not None
+    )
 
-    form_content = f'<form action="{action}" method="{method}" id="{id}" class="form" role="form"'
-    form_content += f'enctype="{enctype[0] if enctype else ""}" {"novalidate" if novalidate else ""}>\n'
+    form_content = f'<form action="{action}" method="{method}" id="{id}" class="form {_classes}" role="{role}"'
+    form_content += f'enctype="{enctype[0] if enctype else ""}" {"novalidate" if novalidate else ""} {_render_kw}>\n'
     form_content += f'{form}\n</form>'
 
     return form_content
