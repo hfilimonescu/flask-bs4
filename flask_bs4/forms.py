@@ -196,19 +196,25 @@ def render_form(form, **kwargs):
     _enctype = kwargs.get('enctype', [])
 
     for field in form:
-        if field.type == 'BooleanField':
-            form_fields += _wrap_boolean(field, **kwargs)
-        elif field.type == 'RadioField':
-            form_fields += _wrap_radio(field, **kwargs)
-        elif field.type == 'FileField':
-            if not _enctype:
-                _enctype.append('multipart/form-data')
-            form_fields += _wrap_file(field, **kwargs)
-        elif field.type == 'SubmitField':
-            form_fields += _wrap_submit(field, **kwargs)
-        elif field.type == 'CSRFTokenField':
-            form_fields += _wrap_csrf(field)
-        else:
-            form_fields += _wrap_field(field, **kwargs)
+        form_fields += render_field(field, **kwargs)
 
     return Markup(_wrap_form(form_fields, enctype=_enctype, **kwargs))
+
+
+def render_field(field, **kwargs):
+    form_field = ''
+
+    if field.type == 'BooleanField':
+        form_field = _wrap_boolean(field, **kwargs)
+    elif field.type == 'RadioField':
+        form_field = _wrap_radio(field, **kwargs)
+    elif field.type == 'FileField':
+        form_field = _wrap_file(field, **kwargs)
+    elif field.type == 'SubmitField':
+        form_field = _wrap_submit(field, **kwargs)
+    elif field.type == 'CSRFTokenField':
+        form_field = _wrap_csrf(field)
+    else:
+        form_field = _wrap_field(field, **kwargs)
+
+    return Markup(form_field)

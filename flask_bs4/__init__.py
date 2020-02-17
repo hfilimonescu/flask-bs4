@@ -17,7 +17,7 @@ else:
         return isinstance(field, HiddenField)
 
 
-from .forms import render_form
+from .forms import render_field, render_form
 from .utils import flash_messages
 
 __version__ = '4.4.1.6.dev'
@@ -145,6 +145,7 @@ class Bootstrap(object):
             subdomain=app.config['BOOTSTRAP_LOCAL_SUBDOMAIN'])
 
         # add the form rendering template filter
+        blueprint.add_app_template_filter(render_field)
         blueprint.add_app_template_filter(render_form)
         blueprint.add_app_template_filter(flash_messages)
 
