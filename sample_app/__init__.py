@@ -31,7 +31,10 @@ class TestForm(FlaskForm):
                                         'lacus, eu ornare ex imperdiet quis. Sed non '
                                         'aliquet magna. Praesent gravida odio id massa '
                                         'condimentum, quis imperdiet nunc luctus.')
-    ranger = IntegerRangeField('The Lone Ranger', render_kw={'step': 1})
+    ranger = IntegerRangeField('The Lone Ranger',
+                               default=3,
+                               render_kw={'step': 1, 'min': 0, 'max': 6,
+                                          'class': 'custom-range'})
     a_float = FloatField(u'A floating point number')
     a_decimal = DecimalField(places=2, rounding='ROUND_HALF_UP',
                              validators=[])

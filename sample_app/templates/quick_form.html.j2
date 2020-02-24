@@ -8,10 +8,6 @@
     <div class="col-md-10">
       {{ messages or get_flashed_messages(with_categories=True) | flash_messages }}
 
-      {# <pre class="display-4">render_form</pre>
-      {{ form | render_form(form_type='horizontal',
-                            button_map={'submit': 'primary btn-block'}) }} #}
-
       <h1>Jinja2 Macro - quick_form</h1>
 
       {{ wtf.quick_form(form,
