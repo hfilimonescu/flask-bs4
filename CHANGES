@@ -5,9 +5,26 @@ Flask-BS4 Changelog
 Version 4.4.1.6.dev
 ---------------
 
-Unreleased
+Released on February 25th 2020
 
--   
+-   Update: Sample app cleanup
+-   Update: `setup.py` no longer lists support for v2
+-   Update: Remove components
+-   Update: Components `modal` renamed to `modals`
+-   Add: `render_field` filter
+-   Update: `render_form` uses `render_kw` with `xmlattr`
+-   Update: `render_form` uses `render_kw`
+-   Add: `cards` component
+-   Fix: `quick_form` attributes cleanup
+-   Fix: `render_form` uses `render_kw` as v3
+-   Fix: `render_form` uses the manual `enctype`
+-   Add: form can have `novalidate` attribute
+-   Add: component `modal` with automatic button
+-   Fix: Button `**kwargs` are used in component
+-   Fix: button `type` maps to `design` for historic
+-   Fix: `btn` components apply size
+-   `quick_form` uses internally `render_form`
+-   Set theme jekyll-theme-minimal
 
 
 Version 4.4.1.5
