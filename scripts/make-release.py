@@ -145,6 +145,10 @@ def make_git_tag(tag):
     Popen(['git', 'tag', tag]).wait()
 
 
+def push_git_tags():
+    Popen(['git', 'push', 'origin', '--tags']).wait()
+
+
 def main():
     os.chdir(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -185,6 +189,7 @@ def main():
     make_git_tag(version)
     build()
     upload()
+    push_git_tags()
     set_init_version(dev_version)
     set_setup_version(dev_version)
     set_changelog_version(dev_version)
