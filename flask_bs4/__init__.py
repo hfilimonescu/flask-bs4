@@ -175,8 +175,8 @@ class Bootstrap(object):
                    JQUERY_VERSION), local)
 
         popperjs = lwrap(
-           WebCDN('//cdnjs.cloudflare.com/ajax/libs/popper.js/%s/umd/' %
-                  POPPER_VERSION), local)
+            WebCDN('//cdnjs.cloudflare.com/ajax/libs/popper.js/%s/umd/' %
+                   POPPER_VERSION), local)
 
         html5shiv = lwrap(
             WebCDN('//cdnjs.cloudflare.com/ajax/libs/html5shiv/%s/' %

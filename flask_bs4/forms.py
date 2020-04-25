@@ -4,17 +4,24 @@ from wtforms.widgets.core import html_params
 
 from .internals import xmlattr
 
-def _add_description(field, **kwargs):
-    if not field.description:
-        return ''
 
-    return f'<small id="{ field.name }Help" class="form-text text-muted">{ field.description }</small>'
+def _add_description(field, **kwargs):
+    rv = ''
+    if field.description:
+        rv += f'<small id="{ field.name }Help" class="form-text text-muted">'
+        rv += field.description
+        rv += f'</small>'
+
+    return Markup(rv)
+
 
 def _add_error_message(field_errors):
-    if not field_errors:
-        return ''
+    rv = ''
+    if field_errors:
+        rv += f'<div class="invalid-feedback">{" ".join(field_errors)}</div>'
 
-    return f'<div class="invalid-feedback">{" ".join(field_errors)}</div>'
+    return Markup(rv)
+
 
 def _wrap_form(form,
                action='',
@@ -36,10 +43,11 @@ def _wrap_form(form,
     form_content += f'enctype="{enctype[0] if enctype else ""}" {"novalidate" if novalidate else ""} {_render_kw}>\n'
     form_content += f'{form}\n</form>'
 
-    return form_content
+    return Markup(form_content)
+
 
 def _wrap_field(field, **kwargs):
-    content = ''
+    rv = ''
     form_type = kwargs.get('form_type', 'basic')
     cols = kwargs.get('horizontal_columns', ('lg', 0, 12))
 
@@ -53,19 +61,20 @@ def _wrap_field(field, **kwargs):
         col2 = 'col-{}-{}'.format(cols[0], cols[2])
         off1 = 'offset-{}-{}'.format(cols[0], cols[1])
 
-        content += '<div class="form-group row">\n'
-        content += f'\t<div class="{col1}">{field.label}</div>\n'
-        content += f'\t<div class="{col2}">{field(class_=field_classes)}'
-        content += _add_error_message(field.errors)
-        content += _add_description(field, **kwargs)
-        content += '</div>\n'
-        content += '</div>\n'
+        rv += Markup('<div class="form-group row">\n')
+        rv += Markup(f'\t<div class="{col1}">{field.label}</div>\n')
+        rv += Markup(f'\t<div class="{col2}">{field(class_=field_classes)}')
+        rv += _add_error_message(field.errors)
+        rv += _add_description(field, **kwargs)
+        rv += Markup('</div>\n</div>\n')
     else:
-        content += f'<div class="form-group">{field.label} {field(class_=field_classes)}'
-        content += _add_error_message(field.errors)
-        content += _add_description(field, **kwargs)
-        content += '</div>\n'
-    return content
+        rv += Markup(
+            f'<div class="form-group">{field.label} {field(class_=field_classes)}')
+        rv += _add_error_message(field.errors)
+        rv += _add_description(field, **kwargs)
+        rv += Markup('</div>\n')
+    return rv
+
 
 def _wrap_boolean(field, **kwargs):
     content = ''
@@ -81,18 +90,19 @@ def _wrap_boolean(field, **kwargs):
     col2 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[2])
     off1 = 'offset-{}-{}'.format(horizontal_columns[0], horizontal_columns[1])
 
-    content += f'<div class="form-group { "row" if form_type == "horizontal" else "" }">\n'
-    content += f'\t<div class="{ off1 if form_type == "horizontal" else "" } { col2 if form_type == "horizontal" else "" }">'
-    content += f'<div class="form-check">'
-    content += f'{field(class_=field_classes)}'
-    content += f'{field.label(class_="form-check-label")}'
+    content += Markup(
+        f'<div class="form-group { "row" if form_type == "horizontal" else "" }">\n')
+    content += Markup(
+        f'\t<div class="{ off1 if form_type == "horizontal" else "" } { col2 if form_type == "horizontal" else "" }">')
+    content += Markup(f'<div class="form-check">')
+    content += field(class_=field_classes)
+    content += field.label(class_="form-check-label")
     content += _add_error_message(field.errors)
     content += _add_description(field, **kwargs)
-    content += f'</div>'
-    content += f'</div>\n'
-    content += '</div>\n'
+    content += Markup('</div></div></div>')
 
     return content
+
 
 def _wrap_radio(field, **kwargs):
     content = ''
@@ -106,39 +116,44 @@ def _wrap_radio(field, **kwargs):
         error_class = ' is-invalid'
         field_classes += error_class
 
-
     col1 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[1])
     col2 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[2])
     off1 = 'offset-{}-{}'.format(horizontal_columns[0], horizontal_columns[1])
 
     if form_type == 'horizontal':
-        content += '<div class="form-group row">\n'
-        content += f'\t<legend class="col-form-label {col1} pt-0">{field.label}</legend>\n'
-        content += f'\t<div class="form-check {col2}">'
+        content += Markup('<div class="form-group row">\n')
+        content += Markup(
+            f'\t<legend class="col-form-label {col1} pt-0">{field.label}</legend>\n')
+        content += Markup(f'\t<div class="form-check {col2}">')
         for key, value in field.choices:
-            content += f'<div class="form-check {col2} {error_class}">\n'
-            content += f'<input class="{field_classes}" type="radio" name="{field.name}" id="{key}" value="{key}" {"checked" if key == field.default else ""}>\n'
-            content += f'<label class="form-check-label" for="{key}">{value}</label>'
-            content += f'</div>\n'
+            content += Markup(
+                f'<div class="form-check {col2} {error_class}">\n')
+            content += Markup(
+                f'<input class="{field_classes}" type="radio" name="{field.name}" id="{key}" value="{key}" {"checked" if key == field.default else ""}>\n')
+            content += Markup(
+                f'<label class="form-check-label" for="{key}">{value}</label>')
+            content += Markup(f'</div>\n')
         content += _add_error_message(field.errors)
         content += _add_description(field, **kwargs)
-        content += '</div>\n'
-        content += '</div>\n'
+        content += Markup('</div></div>')
     else:
-        content += '<div class="form-group">\n'
-        content += f'\t<legend class="col-form-label pt-0">{field.label}</legend>\n'
-        content += f'\t<div class="form-check">'
+        content += Markup('<div class="form-group">\n')
+        content += Markup(
+            f'\t<legend class="col-form-label pt-0">{field.label}</legend>\n')
+        content += Markup(f'\t<div class="form-check">')
         for key, value in field.choices:
-            content += f'<div class="form-check {error_class}">\n'
-            content += f'<input class="{field_classes}" type="radio" name="{field.name}" id="{key}" value="{key}" {"checked" if key == field.default else ""}>\n'
-            content += f'<label class="form-check-label" for="{key}">{value}</label>'
-            content += f'</div>\n'
+            content += Markup(f'<div class="form-check {error_class}">\n')
+            content += Markup(
+                f'<input class="{field_classes}" type="radio" name="{field.name}" id="{key}" value="{key}" {"checked" if key == field.default else ""}>\n')
+            content += Markup(
+                f'<label class="form-check-label" for="{key}">{value}</label>')
+            content += Markup(f'</div>\n')
         content += _add_error_message(field.errors)
         content += _add_description(field, **kwargs)
-        content += '</div>\n'
-        content += '</div>\n'
+        content += Markup('</div></div>')
 
     return content
+
 
 def _wrap_file(field, **kwargs):
     content = ''
@@ -154,19 +169,23 @@ def _wrap_file(field, **kwargs):
     col2 = 'col-{}-{}'.format(cols[0], cols[2])
     off1 = 'offset-{}-{}'.format(cols[0], cols[1])
 
-    content += f'<div class="form-group { "row" if ft == "horizontal" else "" }">\n'
-    content += f'\t<div class="{ col1 if ft == "horizontal" else "" }"></div>\n'
-    content += f'\t<div class="{ col2 if ft == "horizontal" else "" }">\n'
-    content += f'\t<div class="custom-file">\n'
+    content += Markup(
+        f'<div class="form-group { "row" if ft == "horizontal" else "" }">\n')
+    content += Markup(
+        f'\t<div class="{ col1 if ft == "horizontal" else "" }"></div>\n')
+    content += Markup(
+        f'\t<div class="{ col2 if ft == "horizontal" else "" }">\n')
+    content += Markup(f'\t<div class="custom-file">\n')
     content += field(class_=field_classes)
     content += field.label(class_='custom-file-label')
     content += _add_error_message(field.errors)
     content += _add_description(field, **kwargs)
-    content += f'\n\t</div>\n'
-    content += f'\n\t</div>\n'
-    content += f'</div>\n'
+    content += Markup(f'\n\t</div>\n')
+    content += Markup(f'\n\t</div>\n')
+    content += Markup(f'</div>\n')
 
     return content
+
 
 def _wrap_submit(field, **kwargs):
     content = ''
@@ -178,18 +197,23 @@ def _wrap_submit(field, **kwargs):
     col2 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[2])
     off1 = 'offset-{}-{}'.format(horizontal_columns[0], horizontal_columns[1])
 
-    content += f'<div class="form-group { "row" if form_type == "horizontal" else "" }">\n'
-    content += f'\t<div class="{ col1 if form_type == "horizontal" else "" }"></div>\n'
-    content += f'\t<div class="{ col2 if form_type == "horizontal" else "" }">\n'
+    content += Markup(
+        f'<div class="form-group { "row" if form_type == "horizontal" else "" }">\n')
+    content += Markup(
+        f'\t<div class="{ col1 if form_type == "horizontal" else "" }"></div>\n')
+    content += Markup(
+        f'\t<div class="{ col2 if form_type == "horizontal" else "" }">\n')
     content += field(class_=f'btn btn-{ button_map.get(field.name) }')
-    content += f'\n\t</div>\n'
+    content += Markup(f'\n\t</div>\n')
     content += _add_description(field, **kwargs)
-    content += f'</div>\n'
+    content += Markup(f'</div>\n')
 
     return content
 
+
 def _wrap_csrf(field):
     return field()
+
 
 def render_form(form, **kwargs):
     form_fields = ''

@@ -24,6 +24,7 @@ setup(
     install_requires=[
         'Flask>=0.8',
         'Flask-WTF>=0.14.0',
+        'WTForms>=2.3.1',
         'dominate',
         'visitor',
     ],
