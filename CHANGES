@@ -2,12 +2,14 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.4.1.7.dev
+Version 4.4.1.7
 ---------------
 
-Unreleased
+Released on April 26th 2020
 
--   
+-   Patch: WTForms Pull #400 uses Markupsafe
+-   Create pythonpublish.yml
+-   Git: Push tags to `origin` on release
 
 
 Version 4.4.1.6
