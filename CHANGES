@@ -2,12 +2,12 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.4.1.8.dev
+Version 4.4.1.8
 ---------------
 
-Unreleased
+Released on April 29th 2020
 
--   
+-   Patch: Use `Markup.unescape` for fields instead of patching all other fields
 
 
 Version 4.4.1.7
