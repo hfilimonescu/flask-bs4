@@ -9,7 +9,7 @@ def read(fname):
 
 setup(
     name='Flask-BS4',
-    version='4.4.1.8',
+    version='4.4.1.9.dev',
     url='https://github.com/hfilimonescu/flask-bs4',
     license='MIT',
     author='Horia Filimonescu',
