@@ -41,7 +41,7 @@ def _wrap_form(form,
     _render_kw = xmlattr(render_kw)
 
     form_content = f'<form action="{action}" method="{method}" id="{id}" class="form {_classes}" role="{role}"'
-    form_content += f'enctype="{enctype[0] if enctype else ""}" {"novalidate" if novalidate else ""} {_render_kw}>'
+    form_content += f'enctype="{enctype if enctype else ""}" {"novalidate" if novalidate else ""} {_render_kw}>'
     form_content += f'{form}</form>'
 
     return form_content
@@ -207,10 +207,13 @@ def _wrap_csrf(field):
 
 def render_form(form, **kwargs):
     form_fields = ''
-    _enctype = kwargs.get('enctype', [])
+    _enctype = kwargs.pop('enctype', None)
 
     for field in form:
         form_fields += render_field(field, **kwargs)
+
+        if field.type == 'FileField':
+            _enctype = _enctype or 'multipart/form-data'
 
     return Markup(_wrap_form(form_fields, enctype=_enctype, **kwargs))
 
