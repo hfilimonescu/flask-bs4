@@ -2,12 +2,12 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.4.1.9.dev
+Version 4.4.1.9
 ---------------
 
-Unreleased
+Released on May 15th 2020
 
--   
+-   Fix passing the enctype to the quick_form (#3)
 
 
 Version 4.4.1.8
