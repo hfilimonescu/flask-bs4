@@ -2,12 +2,13 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.4.1.10.dev
+Version 4.5.0.0
 ---------------
 
-Unreleased
+Released on May 20th 2020
 
--   
+-   Upgrade Bootstrap to 4.5.0
+-   Upgrade jQuery to 3.5.1
 
 
 Version 4.4.1.9
