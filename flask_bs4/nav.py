@@ -15,39 +15,34 @@ class BootstrapRenderer(Visitor):
         node_id = self.id or sha1(str(id(node)).encode()).hexdigest()
 
         root = tags.nav() if self.html5 else tags.div(role='navigation')
-        root['class'] = 'navbar navbar-default'
-
-        cont = root.add(tags.div(_class='container-fluid'))
-
-        # collapse button
-        header = cont.add(tags.div(_class='navbar-header'))
-        btn = header.add(tags.button())
-        btn['type'] = 'button'
-        btn['class'] = 'navbar-toggle collapsed'
-        btn['data-toggle'] = 'collapse'
-        btn['data-target'] = '#' + node_id
-        btn['aria-expanded'] = 'false'
-        btn['aria-controls'] = 'navbar'
-
-        btn.add(tags.span('Toggle navigation', _class='sr-only'))
-        btn.add(tags.span(_class='icon-bar'))
-        btn.add(tags.span(_class='icon-bar'))
-        btn.add(tags.span(_class='icon-bar'))
+        root['class'] = 'navbar navbar-expand-lg navbar-light bg-light'
 
         # title may also have a 'get_url()' method, in which case we render
         # a brand-link
         if node.title is not None:
             if hasattr(node.title, 'get_url'):
-                header.add(tags.a(node.title.text, _class='navbar-brand',
-                                  href=node.title.get_url()))
+                root.add(tags.a(node.title.text, _class='navbar-brand',
+                                href=node.title.get_url()))
             else:
-                header.add(tags.span(node.title, _class='navbar-brand'))
+                root.add(tags.span(node.title, _class='navbar-brand'))
 
-        bar = cont.add(tags.div(
+        btn = root.add(tags.button())
+        btn['class'] = 'navbar-toggler'
+        btn['type'] = 'button'
+        btn['data-toggle'] = 'collapse'
+        btn['data-target'] = '#' + node_id
+        btn['aria-controls'] = node_id
+        btn['aria-expanded'] = 'false'
+        btn['aria-label'] = 'Toogle Navigation'
+
+        btn.add(tags.span(_class='navbar-toggler-icon'))
+
+        bar = root.add(tags.div(
             _class='navbar-collapse collapse',
             id=node_id,
         ))
-        bar_list = bar.add(tags.ul(_class='nav navbar-nav'))
+
+        bar_list = bar.add(tags.ul(_class='navbar-nav mr-auto'))
 
         for item in node.items:
             bar_list.add(self.visit(item))
@@ -60,22 +55,27 @@ class BootstrapRenderer(Visitor):
         return tags.li(node.text, _class='dropdown-header')
 
     def visit_Link(self, node):
-        item = tags.li()
-        item.add(tags.a(node.text, href=node.get_url()))
+        if hasattr(node, '_in_dropdown'):
+            item = tags.a(node.text, href=node.get_url(),
+                          _class="dropdown-item")
+        else:
+            item = tags.li(_class="nav-item")
+            item.add(tags.a(node.text, href=node.get_url(), _class="nav-link"))
 
         return item
 
     def visit_Separator(self, node):
         if not self._in_dropdown:
             raise RuntimeError('Cannot render separator outside Subgroup.')
-        return tags.li(role='separator', _class='divider')
+        return tags.div(role='separator', _class='dropdown-divider')
 
     def visit_Subgroup(self, node):
         if not self._in_dropdown:
-            li = tags.li(_class='dropdown')
+            li = tags.li(_class='nav-item dropdown')
             if node.active:
-                li['class'] = 'active'
-            a = li.add(tags.a(node.title, href='#', _class='dropdown-toggle'))
+                li['class'] += ' active'
+            a = li.add(tags.a(node.title, href='#',
+                              _class='nav-link dropdown-toggle'))
             a['data-toggle'] = 'dropdown'
             a['role'] = 'button'
             a['aria-haspopup'] = 'true'
@@ -86,6 +86,7 @@ class BootstrapRenderer(Visitor):
 
             self._in_dropdown = True
             for item in node.items:
+                item._in_dropdown = True
                 ul.add(self.visit(item))
             self._in_dropdown = False
 
@@ -94,9 +95,14 @@ class BootstrapRenderer(Visitor):
             raise RuntimeError('Cannot render nested Subgroups')
 
     def visit_View(self, node):
-        item = tags.li()
-        item.add(tags.a(node.text, href=node.get_url(), title=node.text))
+        if hasattr(node, '_in_dropdown'):
+            item = tags.a(node.text, href=node.get_url(),
+                          title=node.text, _class="dropdown-item")
+        else:
+            item = tags.li(_class="nav-item")
+            item.add(tags.a(node.text, href=node.get_url(), _class="nav-link"))
+
         if node.active:
-            item['class'] = 'active'
+            item['class'] += ' active'
 
         return item
