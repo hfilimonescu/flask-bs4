@@ -3,13 +3,16 @@ from datetime import date
 from flask import Flask, render_template, flash
 
 from flask_bs4 import Bootstrap
+from flask_nav import Nav
 from flask_wtf import FlaskForm
+
+from flask_nav.elements import Navbar, View, Subgroup, Separator, Link
 
 from wtforms import TextField, SelectField, PasswordField, SelectMultipleField
 from wtforms import SubmitField, BooleanField, RadioField, FileField
 from wtforms import FloatField, DecimalField, IntegerField
-from wtforms.fields.html5 import DateField, DateTimeField, EmailField, IntegerRangeField
-from wtforms.fields.html5 import DateTimeLocalField
+from wtforms.fields.html5 import DateField, DateTimeField, EmailField
+from wtforms.fields.html5 import DateTimeLocalField, IntegerRangeField
 from wtforms.validators import DataRequired, Email, Length
 
 
@@ -17,13 +20,36 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'you-will-never-guess'
 app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 
+nav = Nav()
+
 bootstrap = Bootstrap(app)
+
+
+@nav.navigation()
+def mynavbar():
+    return Navbar(
+        'Sample App',
+        View('Standard', 'index'),
+        View('Alternative', 'alternative'),
+        Subgroup(
+            'Products',
+            View('Standard SG1', 'index'),
+            Separator(),
+            View('Alternative SG1', 'alternative'),
+            Link('Github', '//github.com/hfilimonescu/flask-bs4/'),
+        ),
+        Link('Github', '//github.com/hfilimonescu/flask-bs4/'),
+    )
+
+
+nav.init_app(app)
 
 
 class TestForm(FlaskForm):
     name = TextField('Your name', validators=[Length(3, 5)],
                      render_kw={'autofocus': 'autofocus'})
-    password = PasswordField(description='Your favorite password', validators=[])
+    password = PasswordField(
+        description='Your favorite password', validators=[])
     email = EmailField(u'Your email address')
     remember = BooleanField('Check me out', validators=[],
                             description='Lorem ipsum dolor sit amet, consectetur '
@@ -39,13 +65,14 @@ class TestForm(FlaskForm):
     a_decimal = DecimalField(places=2, rounding='ROUND_HALF_UP',
                              validators=[])
     a_integer = IntegerField(u'An integer')
-    sample_file = FileField(u'Your favorite file', description='A file you would like to upload.')
+    sample_file = FileField(u'Your favorite file',
+                            description='A file you would like to upload.')
     radio = RadioField('Radio Gaga', choices=[('ch_01', 'Choice 01'),
-                                         ('ch_02', 'Choice 02'),
-                                         ('ch_03', 'Choice 03')],
+                                              ('ch_02', 'Choice 02'),
+                                              ('ch_03', 'Choice 03')],
                        default='ch_02',
                        description='Lorem ipsum dolor sit amet, consectetur '
-                                   'adipiscing elit. Mauris ultricies libero '
+                       'adipiscing elit. Mauris ultricies libero '
                                    'lacus, eu ornare ex imperdiet quis. Sed non '
                                    'aliquet magna. Praesent gravida odio id massa '
                                    'condimentum, quis imperdiet nunc luctus.')
@@ -74,6 +101,7 @@ def index():
         flash('Message')
 
     return render_template('quick_form.html.j2', form=form)
+
 
 @app.route("/alternative", methods=['GET', 'POST'])
 def alternative():
