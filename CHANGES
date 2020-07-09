@@ -2,10 +2,10 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.5.0.1.dev
+Version 4.5.0.1
 ---------------
 
-Unreleased
+Released on July 9th 2020
 
 -   Fix Flask-Nav support updated to Bootstrap 4.x (#4)
 
