@@ -26,23 +26,23 @@
   <ul class="pagination{% if size %} pagination-{{size}}{% endif %}"{{kwargs|xmlattr}}>
   {# prev and next are only show if a symbol has been passed. #}
   {% if prev != None -%}
-    <li{% if not pagination.has_prev %} class="disabled"{% endif %}><a href="{{_arg_url_for(endpoint, url_args, page=pagination.prev_num) if pagination.has_prev else '#'}}">{{prev}}</a></li>
+    <li{% if not pagination.has_prev %} class="page-item disabled"{% endif %}><a class="page-link" href="{{_arg_url_for(endpoint, url_args, page=pagination.prev_num) if pagination.has_prev else '#'}}">{{prev}}</a></li>
   {%- endif -%}
 
   {%- for page in pagination.iter_pages() %}
     {% if page %}
       {% if page != pagination.page %}
-        <li><a href="{{_arg_url_for(endpoint, url_args, page=page)}}">{{page}}</a></li>
+        <li class="page-item"><a class="page-link" href="{{_arg_url_for(endpoint, url_args, page=page)}}">{{page}}</a></li>
       {% else %}
-        <li class="active"><a href="#">{{page}} <span class="sr-only">(current)</span></a></li>
+        <li class="page-item active"><a class="page-link" href="#">{{page}} <span class="sr-only">(current)</span></a></li>
       {% endif %}
     {% elif ellipses != None %}
-      <li class="disabled"><a href="#">{{ellipses}}</a></li>
+      <li class="page-item disabled"><a class="page-link" href="#">{{ellipses}}</a></li>
     {% endif %}
   {%- endfor %}
 
   {% if next != None -%}
-    <li{% if not pagination.has_next %} class="disabled"{% endif %}><a href="{{_arg_url_for(endpoint, url_args, page=pagination.next_num) if pagination.has_next else '#'}}">{{next}}</a></li>
+    <li{% if not pagination.has_next %} class="page-item disabled"{% endif %}><a class="page-link" href="{{_arg_url_for(endpoint, url_args, page=pagination.next_num) if pagination.has_next else '#'}}">{{next}}</a></li>
   {%- endif -%}
   </ul>
 </nav>
