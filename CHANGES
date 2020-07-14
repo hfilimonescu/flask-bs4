@@ -2,12 +2,12 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.5.0.2.dev
+Version 4.5.0.2
 ---------------
 
-Unreleased
+Released on July 14th 2020
 
--   
+-   Fix(pagination): fix pagination classes (#6)
 
 
 Version 4.5.0.1
