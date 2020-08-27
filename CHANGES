@@ -2,12 +2,14 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.5.0.3.dev
+Version 4.5.0.3
 ---------------
 
-Unreleased
+Released on August 27th 2020
 
--   
+-   ADD: `FieldList` is now displayed correctly
+-   ADD: `FormField` is now displayed correctly
+-   FIX: Display error messages under the fields
 
 
 Version 4.5.0.2
