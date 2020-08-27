@@ -212,7 +212,7 @@ def _wrap_formfield(form, **kwargs):
         if field.type != 'CSRFTokenField':
             form_fields += render_field(field, **kwargs)
 
-        if field.type == 'FileField':
+        if field.type in ['FileField', 'MultipleFileField']:
             _enctype = _enctype or 'multipart/form-data'
 
     return Markup(form_fields)
@@ -225,7 +225,7 @@ def render_form(form, **kwargs):
     for field in form:
         form_fields += render_field(field, **kwargs)
 
-        if field.type == 'FileField':
+        if field.type in ['FileField', 'MultipleFileField']:
             _enctype = _enctype or 'multipart/form-data'
 
     return Markup(_wrap_form(form_fields, enctype=_enctype, **kwargs))
