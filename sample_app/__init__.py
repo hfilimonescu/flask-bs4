@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from flask import Flask, render_template, flash
 
@@ -10,9 +10,10 @@ from flask_nav.elements import Navbar, View, Subgroup, Separator, Link
 
 from wtforms import TextField, SelectField, PasswordField, SelectMultipleField
 from wtforms import SubmitField, BooleanField, RadioField, FileField
-from wtforms import FloatField, DecimalField, IntegerField
+from wtforms import FloatField, DecimalField, IntegerField, FormField
+from wtforms import StringField, FieldList
 from wtforms.fields.html5 import DateField, DateTimeField, EmailField
-from wtforms.fields.html5 import DateTimeLocalField, IntegerRangeField
+from wtforms.fields.html5 import IntegerRangeField
 from wtforms.validators import DataRequired, Email, Length
 
 
@@ -45,12 +46,21 @@ def mynavbar():
 nav.init_app(app)
 
 
+class TelephoneForm(FlaskForm):
+    country_code = IntegerField('Country Code', validators=[DataRequired()])
+    area_code = IntegerField('Area Code/Exchange', validators=[DataRequired()])
+    number = StringField('Number')
+
+
 class TestForm(FlaskForm):
     name = TextField('Your name', validators=[Length(3, 5)],
                      render_kw={'autofocus': 'autofocus'})
     password = PasswordField(
         description='Your favorite password', validators=[])
     email = EmailField(u'Your email address')
+    mobile_phone = FormField(TelephoneForm)
+    flist = FieldList(StringField('FieldList "Name"'),
+                      min_entries=2, label='Authors')
     remember = BooleanField('Check me out', validators=[],
                             description='Lorem ipsum dolor sit amet, consectetur '
                                         'adipiscing elit. Mauris ultricies libero '
@@ -88,8 +98,8 @@ class TestForm(FlaskForm):
                                                 ('ch_03', 'Choice 03')],
                                        default=['ch_01', 'ch_03'],
                                        validators=[DataRequired()])
-    birthday = DateField(u'Your birthday', default=date.today())
-
+    birthday = DateField(u'Your birthday', default=date.today)
+    date_time = DateTimeField(u'DateTime', default=datetime.now)
     submit = SubmitField(u'Submit Form')
 
 

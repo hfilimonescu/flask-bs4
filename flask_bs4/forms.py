@@ -204,6 +204,20 @@ def _wrap_csrf(field):
     return field()
 
 
+def _wrap_formfield(form, **kwargs):
+    form_fields = ''
+    _enctype = kwargs.pop('enctype', None)
+
+    for field in form:
+        if field.type != 'CSRFTokenField':
+            form_fields += render_field(field, **kwargs)
+
+        if field.type == 'FileField':
+            _enctype = _enctype or 'multipart/form-data'
+
+    return Markup(form_fields)
+
+
 def render_form(form, **kwargs):
     form_fields = ''
     _enctype = kwargs.pop('enctype', None)
@@ -230,6 +244,10 @@ def render_field(field, **kwargs):
         form_field = _wrap_submit(field, **kwargs)
     elif field.type == 'CSRFTokenField':
         form_field = _wrap_csrf(field)
+    elif field.type == 'FormField':
+        form_field = _wrap_formfield(field.form, **kwargs)
+    elif field.type == 'FieldList':
+        form_field = _wrap_formfield(field.entries, **kwargs)
     else:
         form_field = _wrap_field(field, **kwargs)
 

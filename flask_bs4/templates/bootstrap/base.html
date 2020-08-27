@@ -1,7 +1,8 @@
 {% block doc -%}
 <!DOCTYPE html>
 <html{% block html_attribs %}{% endblock html_attribs %}>
-{%- block html %}
+  {%- block html %}
+
   <head>
     {%- block head %}
     <title>{% block title %}{{ title | default }}{% endblock title %}</title>
@@ -14,6 +15,9 @@
     <!-- Bootstrap -->
     <link href="{{ bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap') }}" rel="stylesheet">
     {%- endblock styles %}
+    {% block favicon %}
+    <link rel="icon" type="image/ico" href="/static/favicon.ico">
+    {% endblock favicon %}
     {%- endblock head %}
   </head>
   <body{% block body_attribs %}{% endblock body_attribs %}>
@@ -31,13 +35,14 @@
     <script src="{{ bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap') }}"></script>
 
     <script>
-      $('.modal').on('shown.bs.modal', function() {
+      $('.modal').on('shown.bs.modal', function () {
         $(this).find('[autofocus]').focus();
       });
     </script>
     {%- endblock scripts %}
     {%- endblock body %}
-  </body>
-{%- endblock html %}
-</html>
-{% endblock doc -%}
+    </body>
+    {%- endblock html %}
+
+    </html>
+    {% endblock doc -%}
