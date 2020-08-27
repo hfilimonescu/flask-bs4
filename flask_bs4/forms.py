@@ -17,11 +17,10 @@ def _add_description(field, **kwargs):
 
 
 def _add_error_message(field_errors):
-    rv = ''
-    if not field_errors:
-        rv = f'<div class="invalid-feedback">{" ".join(field_errors)}</div>'
+    if field_errors:
+        return f'<div class="invalid-feedback">{" ".join(field_errors)}</div>'
 
-    return rv
+    return ''
 
 
 def _wrap_form(form,
