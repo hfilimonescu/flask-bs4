@@ -1,5 +1,9 @@
 {% extends "bootstrap/base.html" %}
 
+{% block html_attribs %}
+  lang="en"
+{% endblock html_attribs %}
+
 {% block navbar %}
   {{ nav.mynavbar.render() }}
 {% endblock %}

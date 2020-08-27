@@ -13,7 +13,7 @@ from wtforms import SubmitField, BooleanField, RadioField, FileField
 from wtforms import FloatField, DecimalField, IntegerField, FormField
 from wtforms import StringField, FieldList
 from wtforms.fields.html5 import DateField, DateTimeField, EmailField
-from wtforms.fields.html5 import IntegerRangeField
+from wtforms.fields.html5 import DateTimeLocalField, IntegerRangeField
 from wtforms.validators import DataRequired, Email, Length
 
 
@@ -100,6 +100,8 @@ class TestForm(FlaskForm):
                                        validators=[DataRequired()])
     birthday = DateField(u'Your birthday', default=date.today)
     date_time = DateTimeField(u'DateTime', default=datetime.now)
+    date_time_local = DateTimeLocalField(
+        u'DateTimeLocal', format='%Y-%m-%dT%H:%M', default=datetime.now)
     submit = SubmitField(u'Submit Form')
 
 
