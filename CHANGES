@@ -2,12 +2,15 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.5.0.4.dev
+Version 4.5.2.0
 ---------------
 
-Unreleased
+Released on September 23rd 2020
 
--   
+-   Update Bootstrap to 4.5.2
+-   Update `popper.js` to 1.16.1
+-   `DateTimeLocalField` added to sample app.
+-   Add: Support forms with `MultipleFileField`.
 
 
 Version 4.5.0.3
