@@ -23,7 +23,7 @@ from .utils import flash_messages
 __version__ = '4.5.0.4.dev'
 BOOTSTRAP_VERSION = re.sub(r'^(\d+\.\d+\.\d+).*', r'\1', __version__)
 JQUERY_VERSION = '3.5.1'
-POPPER_VERSION = '1.16.0'
+POPPER_VERSION = '1.16.1'
 HTML5SHIV_VERSION = '3.7.3'
 RESPONDJS_VERSION = '1.4.2'
 
