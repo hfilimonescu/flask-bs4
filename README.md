@@ -1,5 +1,9 @@
 # Flask-BS4
 
+[![Downloads](https://pepy.tech/badge/flask-bs4)](https://pepy.tech/project/flask-bs4)
+[![Downloads](https://pepy.tech/badge/flask-bs4/month)](https://pepy.tech/project/flask-bs4/month)
+[![Downloads](https://pepy.tech/badge/flask-bs4/week)](https://pepy.tech/project/flask-bs4/week)
+
 ***This is a fork of [Flask-Bootsrap](https://pypi.org/project/Flask-Bootstrap/) upgraded to Bootstrap 4.x.x.***
 
 Flask-Bootstrap packages [Bootstrap](http://getbootstrap.com) into an extension that mostly consists of a blueprint named `bootstrap`. It can also create links to serve Bootstrap from a CDN and works with no boilerplate code in your application.
