@@ -115,3 +115,7 @@ dmypy.json
 
 # Visual Studio Code
 .vscode
+
+node_modules
+yarn.lock
+package.json
