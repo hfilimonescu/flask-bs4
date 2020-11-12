@@ -88,7 +88,7 @@ def _wrap_boolean(field, **kwargs):
     col2 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[2])
     off1 = 'offset-{}-{}'.format(horizontal_columns[0], horizontal_columns[1])
 
-    rv += f'<div class="form-group { "row" if form_type == "horizontal" else "" }">'
+    rv += f'<div class="mb-3 { "row" if form_type == "horizontal" else "" }">'
     rv += f'<div class="{ off1 if form_type == "horizontal" else "" } { col2 if form_type == "horizontal" else "" }">'
     rv += f'<div class="form-check">'
     rv += field(class_=field_classes).unescape()
@@ -118,7 +118,7 @@ def _wrap_radio(field, **kwargs):
     col2 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[2])
 
     if form_type == 'horizontal':
-        rv += f'<div class="form-group row"> \
+        rv += f'<div class="mb-3 row"> \
                 <legend class="col-form-label {col1} pt-0"> \
                 {field.label} \
                 </legend> \
@@ -134,7 +134,7 @@ def _wrap_radio(field, **kwargs):
         rv += _add_description(field, **kwargs)
         rv += '</div></div>'
     else:
-        rv += f'<div class="form-group"> \
+        rv += f'<div class="mb-3"> \
                 <legend class="col-form-label pt-0">{field.label}</legend> \
                 <div class="form-check">'
         for key, value in field.choices:
@@ -188,7 +188,7 @@ def _wrap_submit(field, **kwargs):
     col1 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[1])
     col2 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[2])
 
-    rv += f'<div class="form-group { "row" if form_type == "horizontal" else "" }">'
+    rv += f'<div class="mb-3 { "row" if form_type == "horizontal" else "" }">'
     rv += f'<div class="{ col1 if form_type == "horizontal" else "" }"></div>'
     rv += f'<div class="{ col2 if form_type == "horizontal" else "" }">'
     rv += field(
