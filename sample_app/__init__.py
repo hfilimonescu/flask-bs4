@@ -70,7 +70,7 @@ class TestForm(FlaskForm):
     ranger = IntegerRangeField('The Lone Ranger',
                                default=3,
                                render_kw={'step': 1, 'min': 0, 'max': 6,
-                                          'class': 'custom-range'})
+                                          'class': 'form-range'})
     a_float = FloatField(u'A floating point number')
     a_decimal = DecimalField(places=2, rounding='ROUND_HALF_UP',
                              validators=[])

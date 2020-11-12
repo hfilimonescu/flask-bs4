@@ -60,15 +60,15 @@ def _wrap_field(field, **kwargs):
         col1 = 'col-{}-{}'.format(cols[0], cols[1])
         col2 = 'col-{}-{}'.format(cols[0], cols[2])
 
-        rv += '<div class="form-group row">'
-        rv += f'<div class="{col1}">{field.label}</div>'
+        rv += '<div class="mb-3 row">'
+        rv += f'<div class="{col1} col-form-label">{field.label}</div>'
         rv += f'<div class="{col2}">{field(class_=field_classes)}'
         rv += _add_error_message(field.errors)
         rv += _add_description(field, **kwargs)
         rv += '</div>'
         rv += '</div>'
     else:
-        rv += f'<div class="form-group">{field.label} {field(class_=field_classes)}'
+        rv += f'<div class="mb-3">{field.label} {field(class_=field_classes)}'
         rv += _add_error_message(field.errors)
         rv += _add_description(field, **kwargs)
         rv += '</div>'
@@ -156,7 +156,7 @@ def _wrap_file(field, **kwargs):
     ft = kwargs.get('form_type', 'basic')
     cols = kwargs.get('horizontal_columns', ('lg', 0, 12))
 
-    field_classes = 'custom-file-input'
+    field_classes = 'form-control'
 
     if field.errors:
         field_classes += ' is-invalid'
@@ -164,12 +164,12 @@ def _wrap_file(field, **kwargs):
     col1 = 'col-{}-{}'.format(cols[0], cols[1])
     col2 = 'col-{}-{}'.format(cols[0], cols[2])
 
-    rv += f'<div class="form-group { "row" if ft == "horizontal" else "" }">'
+    rv += f'<div class="mb-3 { "row" if ft == "horizontal" else "" }">'
     rv += f'<div class="{ col1 if ft == "horizontal" else "" }"></div>'
     rv += f'<div class="{ col2 if ft == "horizontal" else "" }">'
     rv += f'<div class="custom-file">'
-    rv += field(class_=field_classes).unescape()
     rv += field.label(class_='custom-file-label').unescape()
+    rv += field(class_=field_classes).unescape()
     rv += _add_error_message(field.errors)
     rv += _add_description(field, **kwargs)
     rv += f'</div>'
@@ -238,8 +238,9 @@ def render_field(field, **kwargs):
         form_field = _wrap_boolean(field, **kwargs)
     elif field.type == 'RadioField':
         form_field = _wrap_radio(field, **kwargs)
-    elif field.type == 'FileField':
-        form_field = _wrap_file(field, **kwargs)
+    # elif field.type == 'FileField':
+        # form_field = _wrap_file(field, **kwargs)
+        # form_field = _wrap_field(field, **kwargs)
     elif field.type == 'SubmitField':
         form_field = _wrap_submit(field, **kwargs)
     elif field.type == 'CSRFTokenField':
