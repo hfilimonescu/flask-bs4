@@ -47,7 +47,7 @@ def _wrap_form(form,
         **render_kw
     }
 
-    return f'<form {xmlattr(_attributes)} {"novalidate" if novalidate else ""}>{form}</form>'
+    return f'<form { xmlattr(_attributes) } { "novalidate" if novalidate else "" }>{ form }</form>'
 
 
 def _wrap_field(field, **kwargs):
@@ -55,6 +55,8 @@ def _wrap_field(field, **kwargs):
 
     _root_classes = ['mb-3']
     _field_classes = ['form-control']
+    _field_descripton = Markup(_add_description(field, **kwargs))
+    _field_errors = Markup(_add_error_message(field.errors))
     _form_type = kwargs.get('form_type', 'basic')
     _col1_class = ['form-label']
     _col2_class = ['']
@@ -62,19 +64,35 @@ def _wrap_field(field, **kwargs):
     if field.errors:
         _field_classes.append('is-invalid')
 
-    if _form_type == 'horizontal':
+    if _form_type in ['horizontal']:
         _root_classes.append('row')
         _cols = kwargs.get('horizontal_columns', ('lg', 2, 10))
         _col1_class = [f'col-{ _cols[0] }-{ _cols[1] }', 'col-form-label']
         _col2_class = [f'col-{ _cols[0] }-{ _cols[2] }']
 
-    _field_div = tags.div(_class=" ".join(_col2_class))
-    _field_div.add(field(class_=" ".join(_field_classes)))
-    _field_div.add(Markup(_add_error_message(field.errors)))
-    _field_div.add(Markup(_add_description(field, **kwargs)))
+        _field_div = tags.div(_class=" ".join(_col2_class))
+        _field_div.add(field(class_=" ".join(_field_classes)))
+        _field_div.add(_field_errors)
+        _field_div.add(_field_descripton)
 
-    root.add(field.label(class_=" ".join(_col1_class)))
-    root.add(_field_div)
+    _field_label = field.label(class_=" ".join(_col1_class))
+
+    if _form_type in ['floating']:
+        _root_classes.append('form-floating')
+        root.add(field(class_=" ".join(_field_classes), placeholder=""))
+        root.add(_field_label)
+        root.add(_field_errors)
+        root.add(_field_descripton)
+
+    if _form_type in ['basic']:
+        root.add(_field_label)
+        root.add(field(class_=" ".join(_field_classes)))
+        root.add(_field_errors)
+        root.add(_field_descripton)
+
+    if _form_type in ['horizontal']:
+        root.add(_field_label)
+        root.add(_field_div)
 
     root['class'] = " ".join(_root_classes)
 
@@ -188,7 +206,7 @@ def _wrap_file(field, **kwargs):
 def _wrap_submit(field, **kwargs):
     rv = ''
     form_type = kwargs.get('form_type', 'basic')
-    horizontal_columns = kwargs.get('horizontal_columns', ('lg', 0, 12))
+    horizontal_columns = kwargs.get('horizontal_columns', ('lg', 2, 10))
     button_map = kwargs.get('button_map', {'submit': 'primary'})
 
     col1 = f'col-{horizontal_columns[0]}-{horizontal_columns[1]}'
