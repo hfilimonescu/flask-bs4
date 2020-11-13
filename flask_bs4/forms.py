@@ -6,14 +6,15 @@ from .internals import xmlattr
 
 
 def _add_description(field, **kwargs):
-    rv = ''
-
     if field.description:
-        rv += f'<div id="{ field.name }Help" class="form-text">'
-        rv += field.description
-        rv += '</div>'
+        _attributes = {
+            "id": field.name + "Help",
+            "class": "form-text",
+        }
 
-    return rv
+        return f'<div { xmlattr(_attributes) }>{ field.description }</div>'
+
+    return ''
 
 
 def _add_error_message(field_errors):
