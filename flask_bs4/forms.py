@@ -54,15 +54,16 @@ def _wrap_field(field, **kwargs):
     rv = ''
 
     form_type = kwargs.get('form_type', 'basic')
-    cols = kwargs.get('horizontal_columns', ('lg', 0, 12))
     field_classes = 'form-control'
 
     if field.errors:
         field_classes += ' is-invalid'
 
     if form_type == 'horizontal':
-        col1 = 'col-{}-{}'.format(cols[0], cols[1])
-        col2 = 'col-{}-{}'.format(cols[0], cols[2])
+        cols = kwargs.get('horizontal_columns', ('lg', 0, 12))
+
+        col1 = f'col-{cols[0]}-{cols[1]}'
+        col2 = f'col-{cols[0]}-{cols[2]}'
 
         rv += '<div class="mb-3 row">'
         rv += f'<div class="{col1} col-form-label">{field.label}</div>'
@@ -189,8 +190,8 @@ def _wrap_submit(field, **kwargs):
     horizontal_columns = kwargs.get('horizontal_columns', ('lg', 0, 12))
     button_map = kwargs.get('button_map', {'submit': 'primary'})
 
-    col1 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[1])
-    col2 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[2])
+    col1 = f'col-{horizontal_columns[0]}-{horizontal_columns[1]}'
+    col2 = f'col-{horizontal_columns[0]}-{horizontal_columns[2]}'
 
     rv += f'<div class="mb-3 { "row" if form_type == "horizontal" else "" }">'
     rv += f'<div class="{ col1 if form_type == "horizontal" else "" }"></div>'
@@ -241,9 +242,6 @@ def render_field(field, **kwargs):
         form_field = _wrap_boolean(field, **kwargs)
     elif field.type == 'RadioField':
         form_field = _wrap_radio(field, **kwargs)
-    # elif field.type == 'FileField':
-        # form_field = _wrap_file(field, **kwargs)
-        # form_field = _wrap_field(field, **kwargs)
     elif field.type == 'SubmitField':
         form_field = _wrap_submit(field, **kwargs)
     elif field.type == 'CSRFTokenField':
