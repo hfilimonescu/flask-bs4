@@ -19,7 +19,7 @@ def _add_description(field, **kwargs):
 
 def _add_error_message(field_errors):
     if field_errors:
-        return f'<div class="invalid-feedback">{" ".join(field_errors)}</div>'
+        return f'<div class="invalid-feedback">{ " ".join(field_errors) }</div>'
 
     return ''
 
@@ -36,15 +36,18 @@ def _wrap_form(form,
                novalidate=False,
                role='form',
                render_kw={}):
-    _classes = " ".join(extra_classes)
 
-    _render_kw = xmlattr(render_kw)
+    _attributes = {
+        "action": action,
+        "method": method,
+        "id": id,
+        "class": "form " + " ".join(extra_classes),
+        "role": role,
+        "enctype": enctype if enctype else "",
+        **render_kw
+    }
 
-    form_content = f'<form action="{action}" method="{method}" id="{id}" class="form {_classes}" role="{role}"'
-    form_content += f'enctype="{enctype if enctype else ""}" {"novalidate" if novalidate else ""} {_render_kw}>'
-    form_content += f'{form}</form>'
-
-    return form_content
+    return f'<form {xmlattr(_attributes)} {"novalidate" if novalidate else ""}>{form}</form>'
 
 
 def _wrap_field(field, **kwargs):
