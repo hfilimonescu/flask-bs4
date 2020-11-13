@@ -14,8 +14,10 @@ class BootstrapRenderer(Visitor):
         # information about memory contents to the outside
         node_id = self.id or sha1(str(id(node)).encode()).hexdigest()
 
-        root = tags.nav() if self.html5 else tags.div(role='navigation')
-        root['class'] = 'navbar navbar-expand-lg navbar-light bg-light'
+        nav_root = tags.nav() if self.html5 else tags.div(role='navigation')
+        nav_root['class'] = 'navbar navbar-expand-lg navbar-light bg-light'
+
+        root = tags.div(_class="container-fluid")
 
         # title may also have a 'get_url()' method, in which case we render
         # a brand-link
@@ -47,7 +49,9 @@ class BootstrapRenderer(Visitor):
         for item in node.items:
             bar_list.add(self.visit(item))
 
-        return root
+        nav_root.add(root)
+
+        return nav_root
 
     def visit_Text(self, node):
         if not self._in_dropdown:
