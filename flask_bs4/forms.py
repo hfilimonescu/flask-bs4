@@ -1,5 +1,5 @@
+from dominate import tags
 from markupsafe import Markup
-
 from wtforms.widgets.core import html_params
 
 from .internals import xmlattr
@@ -51,33 +51,34 @@ def _wrap_form(form,
 
 
 def _wrap_field(field, **kwargs):
-    rv = ''
+    root = tags.div()
 
-    form_type = kwargs.get('form_type', 'basic')
-    field_classes = 'form-control'
+    _root_classes = ['mb-3']
+    _field_classes = ['form-control']
+    _form_type = kwargs.get('form_type', 'basic')
+    _col1_class = ['form-label']
+    _col2_class = ['']
 
     if field.errors:
-        field_classes += ' is-invalid'
+        _field_classes.append('is-invalid')
 
-    if form_type == 'horizontal':
-        cols = kwargs.get('horizontal_columns', ('lg', 0, 12))
+    if _form_type == 'horizontal':
+        _root_classes.append('row')
+        _cols = kwargs.get('horizontal_columns', ('lg', 2, 10))
+        _col1_class = [f'col-{ _cols[0] }-{ _cols[1] }', 'col-form-label']
+        _col2_class = [f'col-{ _cols[0] }-{ _cols[2] }']
 
-        col1 = f'col-{cols[0]}-{cols[1]}'
-        col2 = f'col-{cols[0]}-{cols[2]}'
+    _field_div = tags.div(_class=" ".join(_col2_class))
+    _field_div.add(field(class_=" ".join(_field_classes)))
+    _field_div.add(Markup(_add_error_message(field.errors)))
+    _field_div.add(Markup(_add_description(field, **kwargs)))
 
-        rv += '<div class="mb-3 row">'
-        rv += f'<div class="{col1} col-form-label">{field.label}</div>'
-        rv += f'<div class="{col2}">{field(class_=field_classes)}'
-        rv += _add_error_message(field.errors)
-        rv += _add_description(field, **kwargs)
-        rv += '</div>'
-        rv += '</div>'
-    else:
-        rv += f'<div class="mb-3">{field.label} {field(class_=field_classes)}'
-        rv += _add_error_message(field.errors)
-        rv += _add_description(field, **kwargs)
-        rv += '</div>'
-    return rv
+    root.add(field.label(class_=" ".join(_col1_class)))
+    root.add(_field_div)
+
+    root['class'] = " ".join(_root_classes)
+
+    return root
 
 
 def _wrap_boolean(field, **kwargs):
