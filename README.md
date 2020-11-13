@@ -1,5 +1,15 @@
 # Flask-BS4
 
+## Bootstrap v5.0.0-alpha3
+
+### Known Issues
+
+- Flask-Nav is missing the `container-fluid` div
+
+  > As a result the navbar is missing some paddings and looks off. This is not in the scope of this package and will not be addressed.
+
+## Bootstrap v4.5.3
+
 [![Downloads](https://pepy.tech/badge/flask-bs4)](https://pepy.tech/project/flask-bs4)
 [![Downloads](https://pepy.tech/badge/flask-bs4/month)](https://pepy.tech/project/flask-bs4/month)
 [![Downloads](https://pepy.tech/badge/flask-bs4/week)](https://pepy.tech/project/flask-bs4/week)
