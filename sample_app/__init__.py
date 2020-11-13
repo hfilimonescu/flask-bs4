@@ -33,10 +33,10 @@ def mynavbar():
         View('Standard', 'index'),
         View('Alternative', 'alternative'),
         Subgroup(
-            'Products',
-            View('Standard SG1', 'index'),
+            'Subgroup',
+            View('Standard Subgroup', 'index'),
+            View('Alternative Subgroup', 'alternative'),
             Separator(),
-            View('Alternative SG1', 'alternative'),
             Link('Github', '//github.com/hfilimonescu/flask-bs4/'),
         ),
         Link('Github', '//github.com/hfilimonescu/flask-bs4/'),

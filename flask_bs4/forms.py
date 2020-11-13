@@ -191,8 +191,7 @@ def _wrap_submit(field, **kwargs):
     rv += f'<div class="mb-3 { "row" if form_type == "horizontal" else "" }">'
     rv += f'<div class="{ col1 if form_type == "horizontal" else "" }"></div>'
     rv += f'<div class="{ col2 if form_type == "horizontal" else "" }">'
-    rv += field(
-        class_=f'btn btn-{ button_map.get(field.name) }').unescape()
+    rv += field(class_=f'btn btn-{ button_map.get(field.name) }').unescape()
     rv += f'</div>'
     rv += _add_description(field, **kwargs)
     rv += f'</div>'

@@ -22,10 +22,7 @@ from .utils import flash_messages
 
 __version__ = '5.0.0-alpha3.0.dev'
 BOOTSTRAP_VERSION = re.sub(r'^(\d+\.\d+\.\d+).*', r'\1', __version__)
-JQUERY_VERSION = '3.5.1'
 POPPER_VERSION = '1.16.1'
-HTML5SHIV_VERSION = '3.7.3'
-RESPONDJS_VERSION = '1.4.2'
 
 
 class CDN(object):
@@ -170,30 +167,15 @@ class Bootstrap(object):
             WebCDN('//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/%s/' %
                    BOOTSTRAP_VERSION), local)
 
-        jquery = lwrap(
-            WebCDN('//cdnjs.cloudflare.com/ajax/libs/jquery/%s/' %
-                   JQUERY_VERSION), local)
-
         popperjs = lwrap(
             WebCDN('//cdnjs.cloudflare.com/ajax/libs/popper.js/%s/umd/' %
                    POPPER_VERSION), local)
-
-        html5shiv = lwrap(
-            WebCDN('//cdnjs.cloudflare.com/ajax/libs/html5shiv/%s/' %
-                   HTML5SHIV_VERSION), local)
-
-        respondjs = lwrap(
-            WebCDN('//cdnjs.cloudflare.com/ajax/libs/respond.js/%s/' %
-                   RESPONDJS_VERSION), local)
 
         app.extensions['bootstrap'] = {
             'cdns': {
                 'local': local,
                 'static': static,
                 'bootstrap': bootstrap,
-                'jquery': jquery,
-                'html5shiv': html5shiv,
-                'respond.js': respondjs,
                 'popper.js': popperjs
             },
         }
