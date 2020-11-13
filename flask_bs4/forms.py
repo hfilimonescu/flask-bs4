@@ -9,9 +9,9 @@ def _add_description(field, **kwargs):
     rv = ''
 
     if field.description:
-        rv += f'<small id="{ field.name }Help" class="form-text text-muted">'
+        rv += f'<div id="{ field.name }Help" class="form-text">'
         rv += field.description
-        rv += '</small>'
+        rv += '</div>'
 
     return rv
 
