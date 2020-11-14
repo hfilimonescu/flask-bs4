@@ -58,31 +58,14 @@ def _wrap_field(field, **kwargs):
     _field_descripton = Markup(_add_description(field, **kwargs))
     _field_errors = Markup(_add_error_message(field.errors))
     _form_type = kwargs.get('form_type', 'basic')
-    _col1_class = ['form-label']
-    _col2_class = ['']
+    _cols = kwargs.get('horizontal_columns', ('lg', 2, 10))
+    _col1_class = [f'col-{ _cols[0] }-{ _cols[1] }', 'col-form-label']
+    _col2_class = [f'col-{ _cols[0] }-{ _cols[2] }']
 
     if field.errors:
         _field_classes.append('is-invalid')
 
-    if _form_type in ['horizontal']:
-        _root_classes.append('row')
-        _cols = kwargs.get('horizontal_columns', ('lg', 2, 10))
-        _col1_class = [f'col-{ _cols[0] }-{ _cols[1] }', 'col-form-label']
-        _col2_class = [f'col-{ _cols[0] }-{ _cols[2] }']
-
-        _field_div = tags.div(_class=" ".join(_col2_class))
-        _field_div.add(field(class_=" ".join(_field_classes)))
-        _field_div.add(_field_errors)
-        _field_div.add(_field_descripton)
-
     _field_label = field.label(class_=" ".join(_col1_class))
-
-    if _form_type in ['floating']:
-        _root_classes.append('form-floating')
-        root.add(field(class_=" ".join(_field_classes), placeholder=""))
-        root.add(_field_label)
-        root.add(_field_errors)
-        root.add(_field_descripton)
 
     if _form_type in ['basic']:
         root.add(_field_label)
@@ -91,8 +74,20 @@ def _wrap_field(field, **kwargs):
         root.add(_field_descripton)
 
     if _form_type in ['horizontal']:
+        _root_classes.append('row')
+        _field_div = tags.div(_class=" ".join(_col2_class))
+        _field_div.add(field(class_=" ".join(_field_classes)))
+        _field_div.add(_field_errors)
+        _field_div.add(_field_descripton)
         root.add(_field_label)
         root.add(_field_div)
+
+    if _form_type in ['floating']:
+        _root_classes.append('form-floating')
+        root.add(field(class_=" ".join(_field_classes), placeholder=""))
+        root.add(_field_label)
+        root.add(_field_errors)
+        root.add(_field_descripton)
 
     root['class'] = " ".join(_root_classes)
 
