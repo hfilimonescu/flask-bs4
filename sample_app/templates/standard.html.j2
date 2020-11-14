@@ -15,10 +15,8 @@
     <div class="col-md-10">
       {{ messages or get_flashed_messages(with_categories=True) | flash_messages }}
 
-      <h1>Python Function - render_template</h1>
-      {{ form | render_form(form_type='horizontal',
-                            horizontal_columns=('lg', 2, 10),
-                            button_map={'submit': 'dark btn-block'}) }}
+      <h1>Standard <small>render_form</small></h1>
+      {{ form | render_form(button_map={'submit': 'dark btn-block'}) }}
     </div>
   </div>
 </div>

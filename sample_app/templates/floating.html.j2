@@ -1,5 +1,4 @@
 {% extends "bootstrap/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
 {% block html_attribs %}
   lang="en"
@@ -10,17 +9,15 @@
 {% endblock %}
 
 {% block content %}
-
   <div class="container-fluid">
 
   <div class="row justify-content-md-center">
     <div class="col-md-10">
       {{ messages or get_flashed_messages(with_categories=True) | flash_messages }}
 
-      <h1>Standard <small>quick_form</small></h1>
-
-      {{ wtf.quick_form(form,
-                        button_map={'submit': 'primary btn-block'}) }}
+      <h1>Floating <small>render_form</small></h1>
+      {{ form | render_form(form_type='floating',
+                            button_map={'submit': 'dark btn-block'}) }}
     </div>
   </div>
 </div>

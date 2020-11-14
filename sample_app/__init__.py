@@ -30,12 +30,16 @@ bootstrap = Bootstrap(app)
 def mynavbar():
     return Navbar(
         'Sample App',
-        View('Standard', 'index'),
-        View('Alternative', 'alternative'),
+        View('Standard', 'standard'),
+        View('Horizontal', 'horizontal'),
+        View('Floating', 'floating'),
+        View('Quick Form', 'quick_form'),
         Subgroup(
             'Subgroup',
-            View('Standard Subgroup', 'index'),
-            View('Alternative Subgroup', 'alternative'),
+            View('Standard', 'standard'),
+            View('Horizontal', 'horizontal'),
+            View('Floating', 'floating'),
+            View('Quick Form', 'quick_form'),
             Separator(),
             Link('Github', '//github.com/hfilimonescu/flask-bs4/'),
         ),
@@ -59,7 +63,7 @@ class TestForm(FlaskForm):
         description='Your favorite password', validators=[])
     email = EmailField(u'Your email address')
     mobile_phone = FormField(TelephoneForm)
-    flist = FieldList(StringField('FieldList "Name"'),
+    flist = FieldList(StringField('FieldList Name'),
                       min_entries=2, label='Authors')
     remember = BooleanField('Check me out', validators=[],
                             description='Lorem ipsum dolor sit amet, consectetur '
@@ -106,20 +110,40 @@ class TestForm(FlaskForm):
 
 
 @app.route("/", methods=['GET', 'POST'])
-def index():
+def standard():
+    form = TestForm()
+
+    if form.validate_on_submit():
+        flash('Message')
+
+    return render_template('standard.html.j2', form=form)
+
+
+@app.route('/horizontal/', methods=['GET', 'POST'])
+def horizontal():
+    form = TestForm()
+
+    if form.validate_on_submit():
+        flash('Message')
+
+    return render_template('horizontal.html.j2', form=form)
+
+
+@app.route('/floating/', methods=['GET', 'POST'])
+def floating():
+    form = TestForm()
+
+    if form.validate_on_submit():
+        flash('Message')
+
+    return render_template('floating.html.j2', form=form)
+
+
+@app.route('/quick_form/', methods=['GET', 'POST'])
+def quick_form():
     form = TestForm()
 
     if form.validate_on_submit():
         flash('Message')
 
     return render_template('quick_form.html.j2', form=form)
-
-
-@app.route("/alternative", methods=['GET', 'POST'])
-def alternative():
-    form = TestForm()
-
-    if form.validate_on_submit():
-        flash('Message')
-
-    return render_template('render_template.html.j2', form=form)
