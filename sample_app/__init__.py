@@ -51,62 +51,83 @@ nav.init_app(app)
 
 
 class TelephoneForm(FlaskForm):
-    country_code = IntegerField('Country Code', validators=[DataRequired()])
-    area_code = IntegerField('Area Code/Exchange', validators=[DataRequired()])
+    country_code = IntegerField(
+        'Country Code',
+        validators=[DataRequired()])
+    area_code = IntegerField(
+        'Area Code/Exchange',
+        validators=[DataRequired()])
     number = StringField('Number')
 
 
 class TestForm(FlaskForm):
-    name = TextField('Your name', validators=[Length(3, 5)],
-                     render_kw={'autofocus': 'autofocus'})
+    name = TextField(
+        'Your name',
+        validators=[Length(3, 5)],
+        render_kw={'autofocus': 'autofocus'})
     password = PasswordField(
-        description='Your favorite password', validators=[])
-    email = EmailField(u'Your email address')
+        description='Your favorite password',
+        validators=[])
+    email = EmailField('Your email address')
     mobile_phone = FormField(TelephoneForm)
     flist = FieldList(StringField('FieldList Name'),
                       min_entries=2, label='Authors')
-    remember = BooleanField('Check me out', validators=[],
-                            description='Lorem ipsum dolor sit amet, consectetur '
-                                        'adipiscing elit. Mauris ultricies libero '
-                                        'lacus, eu ornare ex imperdiet quis. Sed non '
-                                        'aliquet magna. Praesent gravida odio id massa '
-                                        'condimentum, quis imperdiet nunc luctus.')
-    ranger = IntegerRangeField('The Lone Ranger',
-                               default=3,
-                               render_kw={'step': 1, 'min': 0, 'max': 6,
-                                          'class': 'form-range'})
-    a_float = FloatField(u'A floating point number')
-    a_decimal = DecimalField(places=2, rounding='ROUND_HALF_UP',
-                             validators=[])
-    a_integer = IntegerField(u'An integer')
-    sample_file = FileField(u'Your favorite file',
-                            description='A file you would like to upload.')
-    radio = RadioField('Radio Gaga', choices=[('ch_01', 'Choice 01'),
-                                              ('ch_02', 'Choice 02'),
-                                              ('ch_03', 'Choice 03')],
-                       default='ch_02',
-                       description='Lorem ipsum dolor sit amet, consectetur '
-                       'adipiscing elit. Mauris ultricies libero '
-                                   'lacus, eu ornare ex imperdiet quis. Sed non '
-                                   'aliquet magna. Praesent gravida odio id massa '
-                                   'condimentum, quis imperdiet nunc luctus.')
-    select = SelectField('Person',
-                         choices=[('ch_01', 'Choice 01'),
-                                  ('ch_02', 'Choice 02'),
-                                  ('ch_03', 'Choice 03')],
-                         default='ch_03',
-                         validators=[DataRequired()])
-    select_multi = SelectMultipleField('Persons',
-                                       choices=[('ch_01', 'Choice 01'),
-                                                ('ch_02', 'Choice 02'),
-                                                ('ch_03', 'Choice 03')],
-                                       default=['ch_01', 'ch_03'],
-                                       validators=[DataRequired()])
-    birthday = DateField(u'Your birthday', default=date.today)
-    date_time = DateTimeField(u'DateTime', default=datetime.now)
+    remember = BooleanField(
+        'Check me out',
+        validators=[],
+        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
+            Mauris ultricies libero lacus, eu ornare ex imperdiet quis.Sed non \
+            aliquet magna.Praesent gravida odio id massa condimentum, quis \
+            imperdiet nunc luctus.')
+    ranger = IntegerRangeField(
+        'The Lone Ranger',
+        default=3,
+        render_kw={
+            'min': 0,
+            'max': 6,
+            'step': 1,
+            'class': 'form-range',
+        })
+    a_float = FloatField('A floating point number')
+    a_decimal = DecimalField(
+        places=2,
+        rounding='ROUND_HALF_UP',
+        validators=[])
+    a_integer = IntegerField('An integer')
+    sample_file = FileField(
+        'Your favorite file',
+        description='A file you would like to upload.')
+    radio = RadioField(
+        'Radio Gaga',
+        choices=[('ch_01', 'Choice 01'),
+                 ('ch_02', 'Choice 02'),
+                 ('ch_03', 'Choice 03')],
+        default='ch_02',
+        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
+            Mauris ultricies libero lacus, eu ornare ex imperdiet quis.Sed \
+            non aliquet magna.Praesent gravida odio id massa condimentum, \
+            quis imperdiet nunc luctus.')
+    select = SelectField(
+        'Person',
+        choices=[('ch_01', 'Choice 01'),
+                 ('ch_02', 'Choice 02'),
+                 ('ch_03', 'Choice 03')],
+        default='ch_03',
+        validators=[DataRequired()])
+    select_multi = SelectMultipleField(
+        'Persons',
+        choices=[('ch_01', 'Choice 01'),
+                 ('ch_02', 'Choice 02'),
+                 ('ch_03', 'Choice 03')],
+        default=['ch_01', 'ch_03'],
+        validators=[DataRequired()])
+    birthday = DateField('Your birthday', default=date.today)
+    date_time = DateTimeField('DateTime', default=datetime.now)
     date_time_local = DateTimeLocalField(
-        u'DateTimeLocal', format='%Y-%m-%dT%H:%M', default=datetime.now)
-    submit = SubmitField(u'Submit Form')
+        'DateTimeLocal',
+        format='%Y-%m-%dT%H:%M',
+        default=datetime.now)
+    submit = SubmitField('Submit Form')
 
 
 @app.route("/", methods=['GET', 'POST'])
