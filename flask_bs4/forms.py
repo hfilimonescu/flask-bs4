@@ -79,17 +79,18 @@ def _wrap_field(field, **kwargs):
         _col2_class = [f'col-{ _cols[0] }-{ _cols[2] }']
 
         _field_label = field.label(class_=" ".join(_col1_class))
-        _field_div = tags.div(_class=" ".join(_col2_class))
-        _field_div.add(field(class_=" ".join(_field_classes)))
-        _field_div.add(_field_errors)
-        _field_div.add(_field_descripton)
+        _field_wrap = tags.div(_class=" ".join(_col2_class))
+        _field_wrap.add(field(class_=" ".join(_field_classes)))
+        _field_wrap.add(_field_errors)
+        _field_wrap.add(_field_descripton)
         root.add(_field_label)
-        root.add(_field_div)
+        root.add(_field_wrap)
 
     if _form_type in ['floating']:
         _root_classes.append('form-floating')
 
-        root.add(field(class_=" ".join(_field_classes), placeholder=""))
+        root.add(field(class_=" ".join(_field_classes),
+                       placeholder="placeholder"))
         root.add(_field_label)
         root.add(_field_errors)
         root.add(_field_descripton)
@@ -100,30 +101,37 @@ def _wrap_field(field, **kwargs):
 
 
 def _wrap_boolean(field, **kwargs):
-    rv = ''
-    form_type = kwargs.get('form_type', 'basic')
-    horizontal_columns = kwargs.get('horizontal_columns', ('lg', 0, 12))
+    root = tags.div()
+    wrap = tags.div(_class='form-check')
+    hwrap = tags.div()
 
-    field_classes = 'form-check-input'
+    _root_classes = ['mb-3']
+    _field_classes = ['form-check-input']
+    _label_classes = ['form-check-label']
+    _field_descripton = Markup(_add_description(field, **kwargs))
+    _field_errors = Markup(_add_error_message(field.errors))
+    _form_type = kwargs.get('form_type', 'basic')
 
-    if field.errors:
-        field_classes += ' is-invalid'
+    if _form_type in ['horizontal']:
+        _cols = kwargs.get('horizontal_columns', ('lg', 2, 10))
+        _col1_class = f'offset-{ _cols[0] }-{ _cols[1] }'
+        _col2_class = f'col-{ _cols[0] }-{ _cols[2] }'
 
-    col2 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[2])
-    off1 = 'offset-{}-{}'.format(horizontal_columns[0], horizontal_columns[1])
+        _root_classes.append('row')
 
-    rv += f'<div class="mb-3 { "row" if form_type == "horizontal" else "" }">'
-    rv += f'<div class="{ off1 if form_type == "horizontal" else "" } { col2 if form_type == "horizontal" else "" }">'
-    rv += f'<div class="form-check">'
-    rv += field(class_=field_classes).unescape()
-    rv += field.label(class_="form-check-label").unescape()
-    rv += _add_error_message(field.errors)
-    rv += _add_description(field, **kwargs)
-    rv += f'</div>'
-    rv += f'</div>'
-    rv += '</div>'
+        hwrap['class'] = ' '.join([_col1_class, _col2_class])
 
-    return rv
+    wrap.add(field(class_=' '.join(_field_classes)))
+    wrap.add(field.label(class_=' '.join(_label_classes)))
+    wrap.add(_field_errors)
+    wrap.add(_field_descripton)
+
+    hwrap.add(wrap)
+    root.add(hwrap)
+
+    root['class'] = ' '.join(_root_classes)
+
+    return root
 
 
 def _wrap_radio(field, **kwargs):

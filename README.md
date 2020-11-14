@@ -4,6 +4,13 @@
 
 Try it out!
 
+### Known Errors:
+
+- Serving the v5.0.0-alpha3 from CDN is not working because it tries to load v5.0.0
+
+### Discrepancies to the Bootstrap Documentation:
+- `_wrap_boolean` will have an additional `div` without classes if the form_type is `basic` or `floating`
+
 ## Bootstrap v4.5.3
 
 [![Downloads](https://pepy.tech/badge/flask-bs4)](https://pepy.tech/project/flask-bs4)
