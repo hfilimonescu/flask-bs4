@@ -112,6 +112,9 @@ def _wrap_boolean(field, **kwargs):
     _field_errors = Markup(_add_error_message(field.errors))
     _form_type = kwargs.get('form_type', 'basic')
 
+    if field.errors:
+        _field_classes.append('is-invalid')
+
     if _form_type in ['horizontal']:
         _cols = kwargs.get('horizontal_columns', ('lg', 2, 10))
         _col1_class = f'offset-{ _cols[0] }-{ _cols[1] }'
