@@ -138,52 +138,65 @@ def _wrap_boolean(field, **kwargs):
 
 
 def _wrap_radio(field, **kwargs):
-    rv = ''
-    form_type = kwargs.get('form_type', 'basic')
-    horizontal_columns = kwargs.get('horizontal_columns', ('lg', 0, 12))
+    root = tags.div()
+    legend = tags.label(field.label.text)
+    wrapper = tags.div()
 
-    field_classes = 'form-check-input'
-    error_class = ''
+    _root_classes = ['mb-3']
+    _legend_classes = ['form-label', 'pt-0']
+    _wrapper_classes = []
+
+    _field_descripton = Markup(_add_description(field, **kwargs))
+    _field_errors = Markup(_add_error_message(field.errors))
 
     if field.errors:
-        error_class = ' is-invalid'
-        field_classes += error_class
+        _wrapper_classes.append('is-invalid')
 
-    col1 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[1])
-    col2 = 'col-{}-{}'.format(horizontal_columns[0], horizontal_columns[2])
+    _form_type = kwargs.get('form_type', 'basic')
 
-    if form_type == 'horizontal':
-        rv += f'<div class="mb-3 row"> \
-                <legend class="col-form-label {col1} pt-0"> \
-                {field.label} \
-                </legend> \
-                <div class="form-check {col2}">'
-        for key, value in field.choices:
-            rv += f'<div class="form-check {col2} {error_class}"> \
-                <input class="{field_classes}" type="radio" \
-                name = "{field.name}" id = "{key}" value = "{key}" \
-                {"checked" if key == field.default else ""}>\
-                <label class="form-check-label" for="{key}">{value}</label> \
-                </div>'
-        rv += _add_error_message(field.errors)
-        rv += _add_description(field, **kwargs)
-        rv += '</div></div>'
-    else:
-        rv += f'<div class="mb-3"> \
-                <legend class="col-form-label pt-0">{field.label}</legend> \
-                <div class="form-check">'
-        for key, value in field.choices:
-            rv += f'<div class="form-check {error_class}">\
-                    <input class="{field_classes}" type="radio" \
-                        name="{field.name}" id="{key}" value="{key}" \
-                        {"checked" if key == field.default else ""}> \
-                    <label class="form-check-label" for="{key}">{value}</label>\
-                    </div>'
-        rv += _add_error_message(field.errors)
-        rv += _add_description(field, **kwargs)
-        rv += '</div></div>'
+    if _form_type in ['horizontal']:
+        _cols = kwargs.get('horizontal_columns', ('lg', 2, 10))
+        _col1_class = f'col-{ _cols[0] }-{ _cols[1] }'
+        _col2_class = f'col-{ _cols[0] }-{ _cols[2] }'
 
-    return rv
+        _root_classes.append('row')
+        _legend_classes.append(_col1_class)
+        _wrapper_classes.append(_col2_class)
+
+    for key, value in field.choices:
+        item = tags.div(_class='form-check')
+        _label = tags.label(
+            value,
+            _for=key,
+            _class='form-check-label',
+        )
+
+        _field = tags._input(
+            type='radio',
+            name=field.name,
+            id=key,
+            value=key,
+            _class='form-check-input',
+        )
+
+        if key == field.data:
+            _field['checked'] = ''
+
+        item.add(_field)
+        item.add(_label)
+        wrapper.add(item)
+
+    wrapper.add(_field_errors)
+    wrapper.add(_field_descripton)
+
+    legend['class'] = ' '.join(_legend_classes)
+    wrapper['class'] = ' '.join(_wrapper_classes)
+    root['class'] = ' '.join(_root_classes)
+
+    root.add(legend)
+    root.add(wrapper)
+
+    return root
 
 
 def _wrap_file(field, **kwargs):
