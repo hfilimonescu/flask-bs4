@@ -102,11 +102,16 @@ class BootstrapRenderer(Visitor):
         if hasattr(node, '_in_dropdown'):
             item = tags.a(node.text, href=node.get_url(),
                           title=node.text, _class="dropdown-item")
+            if node.active:
+                item['class'] += ' active'
         else:
             item = tags.li(_class="nav-item")
-            item.add(tags.a(node.text, href=node.get_url(), _class="nav-link"))
+            sub_item = tags.a(node.text, href=node.get_url(),
+                              _class="nav-link")
 
-        if node.active:
-            item['class'] += ' active'
+            if node.active:
+                sub_item['class'] += ' active'
+
+            item.add(sub_item)
 
         return item
