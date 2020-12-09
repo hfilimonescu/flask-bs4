@@ -80,7 +80,7 @@ class BootstrapRenderer(Visitor):
                 li['class'] += ' active'
             a = li.add(tags.a(node.title, href='#',
                               _class='nav-link dropdown-toggle'))
-            a['data-toggle'] = 'dropdown'
+            a['data-bs-toggle'] = 'dropdown'
             a['role'] = 'button'
             a['aria-haspopup'] = 'true'
             a['aria-expanded'] = 'false'
