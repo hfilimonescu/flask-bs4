@@ -1,12 +1,12 @@
 # Flask-BS4
 
-## Bootstrap v5.0.0-alpha3
+## Bootstrap v5.0.0-beta1
 
 Try it out!
 
 ### Known Errors:
 
-- Serving the v5.0.0-alpha3 from CDN is not working because it tries to load v5.0.0
+- Serving the v5.0.0-beta1 from CDN is not working because it tries to load v5.0.0
 
 ### Discrepancies to the Bootstrap Documentation:
 - `_wrap_boolean` will have an additional `div` without classes if the form_type is `basic` or `floating`

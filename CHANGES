@@ -2,12 +2,30 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 4.5.3.1.dev
----------------
+Version 5.0.0-beta1.0
+---------------------
 
 Unreleased
 
--   
+-   `_wrap_radio` logic switched to dominate
+-   Fix _wrap_boolean to display errors
+-   Change `_wrap_boolean` to use dominate
+-   Fix class for basic and floating forms
+-   Make test form in sample app more readable
+-   Simplify `_wrap_field` code
+-   Expand sample app to show all three form types
+-   `_wrap_field` initial support for floating labels
+-   Switch `_wrap_field` to dominate and clean up the code
+-   Fix version in setup.py
+-   Fix Navbar for Flask-Nav
+-   Simplify logic for `_wrap_field` and `_wrap_submit`
+-   Simplify `_wrap_form` logic
+-   Simplify `description` logic
+-   Update form field description
+-   Remove jQuery, HTML5SHIV, and RespondJS
+-   Update README for v5-a3
+-   replace all `form-group` with `mb-3`
+-   Update to use v5-alpha3
 
 
 Version 4.5.3.0
