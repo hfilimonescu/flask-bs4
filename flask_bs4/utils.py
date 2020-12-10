@@ -38,7 +38,13 @@ def flash_messages(messages=None, container=False, dismiss=True, autohide=True):
     return ''
 
 
-def flash_alerts(messages=None, container=False, dismiss=''):
+def flash_alerts(messages=None, container=False, dismiss=True, autohide=False):
+    if dismiss:
+        _dismiss = ['alert-dismissible', 'fade', 'show']
+
+    if autohide:
+        _dismiss.append('alert-autohide')
+
     if container:
         wrap = tags.div(cls='container flashed-messages')
         row = wrap.add(tags.div(cls='row'))
@@ -52,7 +58,7 @@ def flash_alerts(messages=None, container=False, dismiss=''):
 
         with col:
             with tags.div(Markup(msg)):
-                tags.attr(cls=f'alert alert-{cat} {dismiss}')
+                tags.attr(cls=f'alert alert-{cat} {" ".join(_dismiss)}')
                 if dismiss:
                     with tags.button():
                         tags.attr(cls='btn-close')
