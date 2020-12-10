@@ -32,9 +32,12 @@
     <script src="{{ bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap') }}"></script>
 
     <script>
-      $('.modal').on('shown.bs.modal', function () {
-        $(this).find('[autofocus]').focus();
-      });
+      var modal = document.getElementsByClassName('modal')[0];
+      var input = document.querySelectorAll('[autofocus]')[0];
+
+      modal.addEventListener('shown.bs.modal', function () {
+        input.focus();
+      })
     </script>
     {%- endblock scripts %}
     {%- endblock body %}
