@@ -1,4 +1,5 @@
 from hashlib import sha1
+
 from dominate import tags
 from visitor import Visitor
 
@@ -31,8 +32,8 @@ class BootstrapRenderer(Visitor):
         btn = root.add(tags.button())
         btn['class'] = 'navbar-toggler'
         btn['type'] = 'button'
-        btn['data-toggle'] = 'collapse'
-        btn['data-target'] = '#' + node_id
+        btn['data-bs-toggle'] = 'collapse'
+        btn['data-bs-target'] = '#' + node_id
         btn['aria-controls'] = node_id
         btn['aria-expanded'] = 'false'
         btn['aria-label'] = 'Toogle Navigation'
@@ -55,7 +56,7 @@ class BootstrapRenderer(Visitor):
 
     def visit_Text(self, node):
         if not self._in_dropdown:
-            return tags.p(node.text, _class='navbar-text')
+            return tags.span(node.text, _class='navbar-text')
         return tags.li(node.text, _class='dropdown-header')
 
     def visit_Link(self, node):
