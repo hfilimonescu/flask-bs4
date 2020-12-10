@@ -31,6 +31,7 @@ def mynavbar():
         View('Floating', 'floating'),
         View('Quick Form', 'quick_form'),
         View('Modal', 'modal'),
+        View('Messages', 'msg', cat=None),
         Subgroup(
             'Subgroup',
             View('Standard', 'standard'),
@@ -134,7 +135,7 @@ def standard():
     form = TestForm()
 
     if form.validate_on_submit():
-        flash('Message')
+        flash('Form validated successfuly')
 
     return render_template('standard.html.j2', form=form)
 
@@ -177,3 +178,26 @@ def modal():
         flash('Message')
 
     return render_template('modal.html.j2', form=form)
+
+
+@app.route('/msg/')
+@app.route('/msg/<cat>/')
+def msg(cat='default'):
+    cateories = [
+        'primary',
+        'secondary',
+        'success',
+        'danger',
+        'warning',
+        'info',
+        'light',
+        'dark',
+        'white',
+    ]
+
+    flash('default message')
+
+    for category in cateories:
+        flash(f'{category} message', category)
+
+    return render_template('messages.html.j2', cat=cat)

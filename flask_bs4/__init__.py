@@ -18,7 +18,7 @@ else:
 
 
 from .forms import render_field, render_form
-from .utils import flash_messages
+from .utils import flash_alerts, flash_messages, flash_toasts
 
 __version__ = '5.0.0-beta1.0'
 BOOTSTRAP_VERSION = re.sub(r'^(\d+\.\d+\.\d+).*', r'\1', __version__)
@@ -127,9 +127,11 @@ class Bootstrap(object):
     def init_app(self, app):
         app.config.setdefault('BOOTSTRAP_USE_MINIFIED', True)
         app.config.setdefault('BOOTSTRAP_CDN_FORCE_SSL', False)
+        app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)
+
+        app.config.setdefault('BOOTSTRAP_USE_TOASTS', False)
 
         app.config.setdefault('BOOTSTRAP_QUERYSTRING_REVVING', True)
-        app.config.setdefault('BOOTSTRAP_SERVE_LOCAL', False)
 
         app.config.setdefault('BOOTSTRAP_LOCAL_SUBDOMAIN', None)
 
@@ -144,7 +146,9 @@ class Bootstrap(object):
         # add the form rendering template filter
         blueprint.add_app_template_filter(render_field)
         blueprint.add_app_template_filter(render_form)
+        blueprint.add_app_template_filter(flash_alerts)
         blueprint.add_app_template_filter(flash_messages)
+        blueprint.add_app_template_filter(flash_toasts)
 
         app.register_blueprint(blueprint)
 

@@ -1,0 +1,37 @@
+{% extends "bootstrap/base.html" %}
+
+{% block html_attribs %}
+  lang="en"
+{% endblock html_attribs %}
+
+{% block navbar %}
+  {{ nav.mynavbar.render() }}
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-10">
+      <h1>Messages</h1>
+
+      <a href="{{ url_for('msg') }}" class="btn btn-primary">Defaults</a>
+      <a href="{{ url_for('msg', cat='alerts') }}" class="btn btn-primary">Alerts</a>
+      <a href="{{ url_for('msg', cat='toasts') }}" class="btn btn-primary">Toasts</a>
+  
+      {% if cat == 'toasts' %}
+        <p>These are the toasts</p>
+        {{ messages or get_flashed_messages(with_categories=True) | flash_toasts }}
+      {% elif cat == 'alerts' %}
+        <p>These are the alerts</p>
+        {{ messages or get_flashed_messages(with_categories=True) | flash_alerts }}
+      {% else %}
+        <p>These are the defaults <small>BOOTSTRAP_USE_TOASTS: {{ config['BOOTSTRAP_USE_TOASTS'] }}</small></p>
+        {{ messages or get_flashed_messages(with_categories=True) | flash_messages }}
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
