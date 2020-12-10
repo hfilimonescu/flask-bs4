@@ -1,21 +1,17 @@
 from datetime import date, datetime
 
-from flask import Flask, render_template, flash
-
+from flask import Flask, flash, render_template
 from flask_bs4 import Bootstrap
 from flask_nav import Nav
+from flask_nav.elements import Link, Navbar, Separator, Subgroup, Text, View
 from flask_wtf import FlaskForm
-
-from flask_nav.elements import Navbar, View, Subgroup, Separator, Link
-
-from wtforms import TextField, SelectField, PasswordField, SelectMultipleField
-from wtforms import SubmitField, BooleanField, RadioField, FileField
-from wtforms import FloatField, DecimalField, IntegerField, FormField
-from wtforms import StringField, FieldList
-from wtforms.fields.html5 import DateField, DateTimeField, EmailField
-from wtforms.fields.html5 import DateTimeLocalField, IntegerRangeField
+from wtforms import (BooleanField, DecimalField, FieldList, FileField,
+                     FloatField, FormField, IntegerField, PasswordField,
+                     RadioField, SelectField, SelectMultipleField, StringField,
+                     SubmitField, TextField)
+from wtforms.fields.html5 import (DateField, DateTimeField, DateTimeLocalField,
+                                  EmailField, IntegerRangeField)
 from wtforms.validators import DataRequired, Email, Length
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'you-will-never-guess'
@@ -34,16 +30,19 @@ def mynavbar():
         View('Horizontal', 'horizontal'),
         View('Floating', 'floating'),
         View('Quick Form', 'quick_form'),
+        View('Modal', 'modal'),
         Subgroup(
             'Subgroup',
             View('Standard', 'standard'),
             View('Horizontal', 'horizontal'),
             View('Floating', 'floating'),
             View('Quick Form', 'quick_form'),
+            View('Modal', 'modal'),
             Separator(),
             Link('Github', '//github.com/hfilimonescu/flask-bs4/'),
         ),
         Link('Github', '//github.com/hfilimonescu/flask-bs4/'),
+        Text('Sample Text'),
     )
 
 
@@ -168,3 +167,13 @@ def quick_form():
         flash('Message')
 
     return render_template('quick_form.html.j2', form=form)
+
+
+@app.route('/modal/', methods=['GET', 'POST'])
+def modal():
+    form = TestForm()
+
+    if form.validate_on_submit():
+        flash('Message')
+
+    return render_template('modal.html.j2', form=form)
