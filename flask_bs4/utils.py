@@ -2,7 +2,7 @@ from dominate import tags
 from markupsafe import Markup
 
 
-def flash_messages(messages=None, container=False, dismiss='alert-dismissible'):
+def flash_messages(messages=None, container=False, dismiss='alert-dismissible fade show'):
     if container:
         wrap = tags.div(cls='container flashed-messages')
         row = wrap.add(tags.div(cls='row'))
@@ -19,8 +19,7 @@ def flash_messages(messages=None, container=False, dismiss='alert-dismissible'):
                 tags.attr(cls=f'alert alert-{cat} {dismiss}')
                 if dismiss:
                     with tags.button():
-                        tags.attr(cls='close')
-                        tags.attr(data_dismiss='alert')
-                        tags.span(Markup('&times;'))
+                        tags.attr(cls='btn-close')
+                        tags.attr(data_bs_dismiss='alert')
 
     return wrap
