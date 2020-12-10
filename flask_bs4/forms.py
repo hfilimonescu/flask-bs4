@@ -256,8 +256,9 @@ def _wrap_formfield(form, **kwargs):
     _enctype = kwargs.pop('enctype', None)
 
     for field in form:
-        if field.type != 'CSRFTokenField':
-            form_fields += render_field(field, **kwargs)
+        # if field.type != 'CSRFTokenField':
+        #     form_fields += render_field(field, **kwargs)
+        form_fields += render_field(field, **kwargs)
 
         if field.type in ['FileField', 'MultipleFileField']:
             _enctype = _enctype or 'multipart/form-data'
