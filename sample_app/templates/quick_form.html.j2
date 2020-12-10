@@ -17,11 +17,9 @@
     <div class="col-md-10">
       {{ messages or get_flashed_messages(with_categories=True) | flash_messages }}
 
-      <h1>Jinja2 Macro - quick_form</h1>
+      <h1>Standard <small>quick_form</small></h1>
 
       {{ wtf.quick_form(form,
-                        form_type='horizontal',
-                        horizontal_columns=('lg', 2, 10),
                         button_map={'submit': 'primary btn-block'}) }}
     </div>
   </div>

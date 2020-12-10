@@ -1,0 +1,26 @@
+{% extends "bootstrap/base.html" %}
+
+{% block html_attribs %}
+  lang="en"
+{% endblock html_attribs %}
+
+{% block navbar %}
+  {{ nav.mynavbar.render() }}
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+
+  <div class="row justify-content-md-center">
+    <div class="col-md-10">
+      {{ messages or get_flashed_messages(with_categories=True) | flash_messages }}
+
+      <h1>Horizontal <small>render_form</small></h1>
+      {{ form | render_form(form_type='horizontal',
+                            horizontal_columns=('lg', 2, 10),
+                            button_map={'submit': 'dark btn-block'}) }}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

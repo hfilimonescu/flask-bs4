@@ -1,4 +1,5 @@
 from hashlib import sha1
+
 from dominate import tags
 from visitor import Visitor
 
@@ -14,8 +15,10 @@ class BootstrapRenderer(Visitor):
         # information about memory contents to the outside
         node_id = self.id or sha1(str(id(node)).encode()).hexdigest()
 
-        root = tags.nav() if self.html5 else tags.div(role='navigation')
-        root['class'] = 'navbar navbar-expand-lg navbar-light bg-light'
+        nav_root = tags.nav() if self.html5 else tags.div(role='navigation')
+        nav_root['class'] = 'navbar navbar-expand-lg navbar-light bg-light'
+
+        root = tags.div(_class="container-fluid")
 
         # title may also have a 'get_url()' method, in which case we render
         # a brand-link
@@ -29,8 +32,8 @@ class BootstrapRenderer(Visitor):
         btn = root.add(tags.button())
         btn['class'] = 'navbar-toggler'
         btn['type'] = 'button'
-        btn['data-toggle'] = 'collapse'
-        btn['data-target'] = '#' + node_id
+        btn['data-bs-toggle'] = 'collapse'
+        btn['data-bs-target'] = '#' + node_id
         btn['aria-controls'] = node_id
         btn['aria-expanded'] = 'false'
         btn['aria-label'] = 'Toogle Navigation'
@@ -47,11 +50,13 @@ class BootstrapRenderer(Visitor):
         for item in node.items:
             bar_list.add(self.visit(item))
 
-        return root
+        nav_root.add(root)
+
+        return nav_root
 
     def visit_Text(self, node):
         if not self._in_dropdown:
-            return tags.p(node.text, _class='navbar-text')
+            return tags.span(node.text, _class='navbar-text')
         return tags.li(node.text, _class='dropdown-header')
 
     def visit_Link(self, node):
@@ -76,7 +81,7 @@ class BootstrapRenderer(Visitor):
                 li['class'] += ' active'
             a = li.add(tags.a(node.title, href='#',
                               _class='nav-link dropdown-toggle'))
-            a['data-toggle'] = 'dropdown'
+            a['data-bs-toggle'] = 'dropdown'
             a['role'] = 'button'
             a['aria-haspopup'] = 'true'
             a['aria-expanded'] = 'false'
@@ -98,11 +103,16 @@ class BootstrapRenderer(Visitor):
         if hasattr(node, '_in_dropdown'):
             item = tags.a(node.text, href=node.get_url(),
                           title=node.text, _class="dropdown-item")
+            if node.active:
+                item['class'] += ' active'
         else:
             item = tags.li(_class="nav-item")
-            item.add(tags.a(node.text, href=node.get_url(), _class="nav-link"))
+            sub_item = tags.a(node.text, href=node.get_url(),
+                              _class="nav-link")
 
-        if node.active:
-            item['class'] += ' active'
+            if node.active:
+                sub_item['class'] += ' active'
+
+            item.add(sub_item)
 
         return item

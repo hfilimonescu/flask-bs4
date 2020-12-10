@@ -28,16 +28,26 @@
     {%- endblock content %}
 
     {% block scripts %}
-    <script src="{{ bootstrap_find_resource('jquery.js', cdn='jquery') }}"></script>
     <script src="{{ bootstrap_find_resource('popper.js', cdn='popper.js') }}"></script>
-    <script src="{{ bootstrap_find_resource('respond.js', cdn='respond.js') }}"></script>
-    <script src="{{ bootstrap_find_resource('html5shiv.js', cdn='html5shiv') }}"></script>
     <script src="{{ bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap') }}"></script>
 
     <script>
-      $('.modal').on('shown.bs.modal', function () {
-        $(this).find('[autofocus]').focus();
+      var modal = document.getElementsByClassName('modal')[0];
+      var input = document.querySelectorAll('[autofocus]')[0];
+
+      if (modal) {
+        modal.addEventListener('shown.bs.modal', function () {
+          input.focus();
+        })
+      }
+    </script>
+    <script>
+      var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+      var toastList = toastElList.map(function (toastEl) {
+        return new bootstrap.Toast(toastEl)
+        // return new bootstrap.Toast(toastEl, { delay: 10000 })
       });
+      toastList.forEach(toast => toast.show());
     </script>
     {%- endblock scripts %}
     {%- endblock body %}
