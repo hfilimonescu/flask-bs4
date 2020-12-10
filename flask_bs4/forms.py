@@ -200,31 +200,12 @@ def _wrap_radio(field, **kwargs):
 
 
 def _wrap_file(field, **kwargs):
-    rv = ''
-    ft = kwargs.get('form_type', 'basic')
-    cols = kwargs.get('horizontal_columns', ('lg', 0, 12))
+    _form_type = kwargs.pop('form_type', 'basic')
 
-    field_classes = 'form-control'
-
-    if field.errors:
-        field_classes += ' is-invalid'
-
-    col1 = 'col-{}-{}'.format(cols[0], cols[1])
-    col2 = 'col-{}-{}'.format(cols[0], cols[2])
-
-    rv += f'<div class="mb-3 { "row" if ft == "horizontal" else "" }">'
-    rv += f'<div class="{ col1 if ft == "horizontal" else "" }"></div>'
-    rv += f'<div class="{ col2 if ft == "horizontal" else "" }">'
-    rv += f'<div class="custom-file">'
-    rv += field.label(class_='custom-file-label').unescape()
-    rv += field(class_=field_classes).unescape()
-    rv += _add_error_message(field.errors)
-    rv += _add_description(field, **kwargs)
-    rv += f'</div>'
-    rv += f'</div>'
-    rv += f'</div>'
-
-    return rv
+    if _form_type in ['floating']:
+        return _wrap_field(field, form_type='basic', **kwargs)
+    else:
+        return _wrap_field(field, form_type=_form_type, **kwargs)
 
 
 def _wrap_submit(field, **kwargs):
@@ -292,6 +273,8 @@ def render_field(field, **kwargs):
         form_field = _wrap_csrf(field)
     elif field.type == 'FormField':
         form_field = _wrap_formfield(field.form, **kwargs)
+    elif field.type == 'FileField':
+        form_field = _wrap_file(field, **kwargs)
     elif field.type == 'FieldList':
         form_field = _wrap_formfield(field.entries, **kwargs)
     else:
