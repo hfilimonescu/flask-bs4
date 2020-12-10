@@ -5,8 +5,21 @@ Flask-BS4 Changelog
 Version 5.0.0-beta1.0
 ---------------------
 
-Unreleased
+Released on December 10th 2020
 
+-   Fix: `flash_alerts` dismissble by default with new logic
+-   Change var names in `forms._wrap_submit`
+-   Add support for Toasts and config key `BOOTSTRAP_USE_TOASTS`
+-   Fix: `FileField` in `floating` form is displayed as `basic` to repair glitch
+-   Fix: FormField CSRF validation
+-   Fix Alerts
+-   Sample App extended by modal
+-   Fix: Modal autofocus without jQuery
+-   Fix: Flask-Nav `data-toggle` to `data-bs-toggle`
+-   Update Popper.js
+-   Fix: Dropdown requires `data-bs-toggle` instead of `data-toggle`
+-   Fix: Active items appear correctly
+-   Update Bootstrap to v5.0.0-beta1
 -   `_wrap_radio` logic switched to dominate
 -   Fix _wrap_boolean to display errors
 -   Change `_wrap_boolean` to use dominate

@@ -1,8 +1,12 @@
 # Flask-BS4
 
+
+
 ## Bootstrap v5.0.0-beta1
 
-Try it out!
+[![Downloads](https://pepy.tech/badge/flask-bs4)](https://pepy.tech/project/flask-bs4)
+[![Downloads](https://pepy.tech/badge/flask-bs4/month)](https://pepy.tech/project/flask-bs4/month)
+[![Downloads](https://pepy.tech/badge/flask-bs4/week)](https://pepy.tech/project/flask-bs4/week)
 
 ### Known Errors:
 
@@ -10,17 +14,6 @@ Try it out!
 
 ### Discrepancies to the Bootstrap Documentation:
 - `_wrap_boolean` will have an additional `div` without classes if the form_type is `basic` or `floating`
-
-## Bootstrap v4.5.3
-
-[![Downloads](https://pepy.tech/badge/flask-bs4)](https://pepy.tech/project/flask-bs4)
-[![Downloads](https://pepy.tech/badge/flask-bs4/month)](https://pepy.tech/project/flask-bs4/month)
-[![Downloads](https://pepy.tech/badge/flask-bs4/week)](https://pepy.tech/project/flask-bs4/week)
-
-***This is a fork of [Flask-Bootsrap](https://pypi.org/project/Flask-Bootstrap/) upgraded to Bootstrap 4.x.x.***
-
-Flask-Bootstrap packages [Bootstrap](http://getbootstrap.com) into an extension that mostly consists of a blueprint named `bootstrap`. It can also create links to serve Bootstrap from a CDN and works with no boilerplate code in your application.
-
 
 ## Usage
 
@@ -65,3 +58,8 @@ $ flask run
 
 Afterwards, point your browser to [localhost:5000](http://localhost:5000),
 then check out the source.
+
+
+***This is a fork of [Flask-Bootsrap](https://pypi.org/project/Flask-Bootstrap/) upgraded to Bootstrap 5.x.x.***
+
+Flask-Bootstrap packages [Bootstrap](http://getbootstrap.com) into an extension that mostly consists of a blueprint named `bootstrap`. It can also create links to serve Bootstrap from a CDN and works with no boilerplate code in your application.
