@@ -210,17 +210,17 @@ def _wrap_file(field, **kwargs):
 
 def _wrap_submit(field, **kwargs):
     rv = ''
-    form_type = kwargs.get('form_type', 'basic')
-    horizontal_columns = kwargs.get('horizontal_columns', ('lg', 2, 10))
-    button_map = kwargs.get('button_map', {'submit': 'primary'})
+    _form_type = kwargs.get('form_type', 'basic')
+    _cols = kwargs.get('horizontal_columns', ('lg', 2, 10))
+    _btn_map = kwargs.get('button_map', {'submit': 'primary'})
 
-    col1 = f'col-{horizontal_columns[0]}-{horizontal_columns[1]}'
-    col2 = f'col-{horizontal_columns[0]}-{horizontal_columns[2]}'
+    _col1 = f'col-{_cols[0]}-{_cols[1]}'
+    _col2 = f'col-{_cols[0]}-{_cols[2]}'
 
-    rv += f'<div class="mb-3 { "row" if form_type == "horizontal" else "" }">'
-    rv += f'<div class="{ col1 if form_type == "horizontal" else "" }"></div>'
-    rv += f'<div class="{ col2 if form_type == "horizontal" else "" }">'
-    rv += field(class_=f'btn btn-{ button_map.get(field.name) }').unescape()
+    rv += f'<div class="mb-3 { "row" if _form_type == "horizontal" else "" }">'
+    rv += f'<div class="{ _col1 if _form_type == "horizontal" else "" }"></div>'
+    rv += f'<div class="{ _col2 if _form_type == "horizontal" else "" }">'
+    rv += field(class_=f'btn btn-{ _btn_map.get(field.name) }').unescape()
     rv += f'</div>'
     rv += _add_description(field, **kwargs)
     rv += f'</div>'
