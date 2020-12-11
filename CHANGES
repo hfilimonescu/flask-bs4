@@ -2,10 +2,10 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 5.0.0-beta1.0
----------------------
+Version 5.0.0.0
+---------------
 
-Released on December 10th 2020
+Released on December 11th 2020
 
 -   Fix: `flash_alerts` dismissble by default with new logic
 -   Change var names in `forms._wrap_submit`
