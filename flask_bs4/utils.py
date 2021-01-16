@@ -52,7 +52,13 @@ def flash_alerts(messages=None, container=False, dismiss=True, autohide=False):
     else:
         wrap = col = tags.div()
 
-    for cat, msg in messages:
+    for message in messages:
+        try:
+            cat, msg = message
+        except ValueError:
+            msg = message
+            cat = 'message'
+
         if cat == 'message':
             cat = 'dark'
 
@@ -76,7 +82,13 @@ def flash_toasts(messages=None, stacked=False, autohide=False):
     else:
         wrap = col = tags.div()
 
-    for cat, msg in messages:
+    for message in messages:
+        try:
+            cat, msg = message
+        except ValueError:
+            msg = message
+            cat = 'message'
+
         if cat == 'message':
             cat = 'dark'
 
