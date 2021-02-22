@@ -133,6 +133,11 @@ class Bootstrap(object):
 
         app.config.setdefault('BOOTSTRAP_QUERYSTRING_REVVING', True)
 
+        # If `BOOTSTRAP_TOAST_AUTOHIDE` is False it will override
+        # `BOOTSTRAP_TOAST_DELAY` and keep the toast unhidden.
+        app.config.setdefault('BOOTSTRAP_TOAST_AUTOHIDE', True)
+        app.config.setdefault('BOOTSTRAP_TOAST_DELAY', 5000)
+
         app.config.setdefault('BOOTSTRAP_LOCAL_SUBDOMAIN', None)
 
         blueprint = Blueprint(
