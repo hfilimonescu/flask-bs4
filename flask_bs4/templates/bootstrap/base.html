@@ -45,9 +45,15 @@
       var toastElList = [].slice.call(document.querySelectorAll('.toast'))
       var toastList = toastElList.map(function (toastEl) {
         return new bootstrap.Toast(toastEl)
-        // return new bootstrap.Toast(toastEl, { delay: 10000 })
       });
       toastList.forEach(toast => toast.show());
+    </script>
+    <script>
+      toastElList.map(function (toastEl) {
+        toastEl.addEventListener('hidden.bs.toast', function () {
+          toastEl.remove();
+        });
+      });
     </script>
     {%- endblock scripts %}
     {%- endblock body %}
