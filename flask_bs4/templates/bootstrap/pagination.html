@@ -9,13 +9,13 @@
 {%- endmacro %}
 
 {% macro render_pagination(pagination,
-endpoint=None,
-prev=('&laquo;')|safe,
-next=('&raquo;')|safe,
-size=None,
-ellipses='…',
-args={}
-)
+                           endpoint=None,
+                           prev=('&laquo;')|safe,
+                           next=('&raquo;')|safe,
+                           size=None,
+                           ellipses='…',
+                           args={}
+                          )
 -%}
 {% with url_args = {} %}
 {%- do url_args.update(request.view_args if not endpoint else {}),
