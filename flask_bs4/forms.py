@@ -61,6 +61,9 @@ def _wrap_field(field, **kwargs):
     _col1_class = ['form-label']
     _col2_class = ['']
 
+    if field.type == 'SelectField':
+        _field_classes = ['form-select']
+
     if field.errors:
         _field_classes.append('is-invalid')
 
