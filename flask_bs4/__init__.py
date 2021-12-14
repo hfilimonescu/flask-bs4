@@ -20,9 +20,9 @@ else:
 from .forms import render_field, render_form
 from .utils import flash_alerts, flash_messages, flash_toasts
 
-__version__ = '5.0.0.2.dev'
+__version__ = '5.1.3'
 BOOTSTRAP_VERSION = re.sub(r'^(\d+\.\d+\.\d+).*', r'\1', __version__)
-POPPER_VERSION = '1.16.1'
+POPPER_VERSION = '2.11.0'
 
 
 class CDN(object):
