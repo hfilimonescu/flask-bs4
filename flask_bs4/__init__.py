@@ -22,7 +22,7 @@ from .utils import flash_alerts, flash_messages, flash_toasts
 
 __version__ = '5.1.3.1.dev'
 BOOTSTRAP_VERSION = re.sub(r'^(\d+\.\d+\.\d+).*', r'\1', __version__)
-POPPER_VERSION = '2.11.0'
+POPPER_VERSION = '2.11.6'
 
 
 class CDN(object):

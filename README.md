@@ -8,9 +8,6 @@
 [![Downloads](https://pepy.tech/badge/flask-bs4/month)](https://pepy.tech/project/flask-bs4/month)
 [![Downloads](https://pepy.tech/badge/flask-bs4/week)](https://pepy.tech/project/flask-bs4/week)
 
-### Known Errors:
-
-- Serving the v5.0.0-beta1 from CDN is not working because it tries to load v5.0.0
 
 ### Discrepancies to the Bootstrap Documentation:
 - `_wrap_boolean` will have an additional `div` without classes if the form_type is `basic` or `floating`

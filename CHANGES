@@ -2,12 +2,13 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 5.1.3.1.dev
+Version 5.2.2.0
 ---------------
 
-Unreleased
+Released on October 23rd 2022
 
--   
+-   Update popperjs 2.11.6
+-   Upgrade Bootstrap 5.2.2
 
 
 Version 5.1.3.0
