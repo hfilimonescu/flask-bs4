@@ -119,3 +119,6 @@ dmypy.json
 node_modules
 yarn.lock
 package.json
+
+# MacOS
+.DS_Store

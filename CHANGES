@@ -2,12 +2,12 @@ Flask-BS4 Changelog
 ===================
 
 
-Version 5.2.2.1.dev
+Version 5.3.1.0
 ---------------
 
-Unreleased
+Released on August 24th 2023
 
--   
+-   Upgrade Bootstrap 5.3.1
 
 
 Version 5.2.2.0
